@@ -1,0 +1,26 @@
+{
+  "name": "rumble",
+  "version": "1.0.0",
+  "description": "",
+  "main": "node.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joannexin/rumble.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/joannexin/rumble/issues"
+  },
+  "homepage": "https://github.com/joannexin/rumble#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "http": "0.0.0",
+    "path": "^0.12.7"
+  }
+}
