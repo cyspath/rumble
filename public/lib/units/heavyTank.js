@@ -11,12 +11,14 @@
     this.movementRange = 5;
     this.attackRange = 1;
     this.landTypeList = { "normal": true, "mountain": false };
+    this.turnOver = true;
     this.model = this.addModel();
     this.boardAddUnit();
   };
 
   HeavyTank.prototype.addModel = function() {
     var model = game.add.sprite(this.args.x, this.args.y, 'heavyTank' + this.color);
+    model.tint = 0xACACAC;
 
     // model.animations.add('left', [0,1], 10, true);
     // model.animations.add('right', [2,3], 10, true);
@@ -26,11 +28,22 @@
   };
 
   HeavyTank.prototype.boardAddUnit = function() {
-    window.board.addUnit(this);
+    window.board.addUnitInitialize(this);
   };
 
   HeavyTank.prototype.boardRemoveUnit = function() {
     window.board.removeUnit(this);
   };
+
+  HeavyTank.prototype.startTurn = function() {
+    this.turnOver = false;
+    this.model.tint = 0xFFFFFF;
+  };
+
+  HeavyTank.prototype.endTurn = function() {
+    this.turnOver = true;
+    this.model.tint = 0xACACAC;
+  };
+
 
 })();

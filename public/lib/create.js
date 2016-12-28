@@ -1,7 +1,8 @@
 // var player;
 // var platforms;
 
-var board = new window.Rumble.Board
+var board = new window.Rumble.Board;
+var battle = new window.Rumble.Battle;
 var grid = board.grid;
 
 var cursors;
@@ -29,6 +30,13 @@ function create() {
   var gt2 = new window.Rumble.HeavyTank({ x: 128, y: 320, color: "Green" });
 
   game.physics.arcade.enable([ bt.model, gt1.model ], Phaser.Physics.ARCADE);
+
+
+  var team1 = [bt];
+  var team2 = [gt1, gt2];
+  battle.start(team1, team2);
+
+
   // var tween = game.add.tween(bt.model.body).
   //   to( { y: 500 }, 1000, Phaser.Easing.Linear.None, true).
   //   to( { x: 500, y: 300 }, 1000, Phaser.Easing.Linear.None, true).

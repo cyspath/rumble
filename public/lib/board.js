@@ -107,7 +107,7 @@
   };
 
   Board.prototype.handleUnitClick = function() {
-    if (window.animations) { return; };
+    if (window.animations || this.context.turnOver) { return; };
     var model = this.context.model;
     if (window.Rumble.SelectedUnit !== this.context) {
       var pathFinder = utils.movementCoors(grid, this.context);
@@ -126,15 +126,18 @@
     return { "i": y/64, "j": x/64 }
   };
 
-  Board.prototype.addUnit = function(unit) {
-    if (this.contextFunction) {
-      var coor = this.contextFunction.convertXYToCoor(this.unit.model.position.x, this.unit.model.position.y);
-      this.contextFunction.grid[coor.i][coor.j].unit = this.unit;
-    } else {
-      var coor = this.convertXYToCoor(unit.model.position.x, unit.model.position.y);
-      this.grid[coor.i][coor.j].unit = unit;
-    }
-    window.animations = false;
+  Board.prototype.addUnitInitialize = function(unit) {
+    var coor = this.convertXYToCoor(unit.model.position.x, unit.model.position.y);
+    this.grid[coor.i][coor.j].unit = unit; // add a reference to unit for grid
+  };
+
+  Board.prototype.addUnit = function() {
+    var coor = this.contextFunction.convertXYToCoor(this.unit.model.position.x, this.unit.model.position.y);
+    this.contextFunction.grid[coor.i][coor.j].unit = this.unit; // add a reference to unit for grid
+    this.unit.endTurn(); // end current unit's turn
+
+    window.animations = false; // let global know animation is now complete as well
+    window.battle.checkNextTurn(); // check whether win, take next turn, or doing nothing (keep going current turn)
   };
 
   Board.prototype.removeUnit = function(unit) {
