@@ -15,6 +15,13 @@ var x = 100, y = 100, t = 4
 
 window.Rumble.SelectedUnit;
 window.Rumble.PathFinder;
+window.Rumble.AtkRangeCoors;
+
+setInterval(function () {
+  var su = window.Rumble.SelectedUnit;
+  var txt = su ? (su.type + su.color) : su;
+  console.log(txt);
+}, 500)
 
 function create() {
 

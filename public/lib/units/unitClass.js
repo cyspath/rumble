@@ -58,7 +58,7 @@
   UnitClass.prototype.isEnemyInRange = function() {
     var coors = [];
     var that = this;
-    this.inRangeCoors().forEach(function(coor) {
+    this.atkRangeCoors().forEach(function(coor) {
       var tileUnit = window.board.grid[coor[0]][coor[1]].unit;
       if (tileUnit && tileUnit.color !== that.color) {
         coors.push(coor);
@@ -78,7 +78,7 @@
     }
   };
 
-  UnitClass.prototype.inRangeCoors = function() {
+  UnitClass.prototype.atkRangeCoors = function() {
     // this function will get complicated with longer range
     var coor = this.currentGridCoor();
     return [[coor.i - 1, coor.j], [coor.i, coor.j + 1], [coor.i + 1, coor.j], [coor.i, coor.j - 1]].filter(function (a) {

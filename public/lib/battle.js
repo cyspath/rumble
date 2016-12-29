@@ -7,6 +7,7 @@
     this.turn = 1;
     this.team1 = [];
     this.team2 = [];
+    this.colors = ["Green", "Blue"]; // staring, turn 1, team's color is 'Blue'
   };
 
   Battle.prototype.start = function(team1, team2) {
@@ -52,6 +53,14 @@
   Battle.prototype.currentTeam = function() {
     var n = this.turn % 2 === 0 ? 2 : 1;
     return this["team" + n]
+  };
+
+  Battle.prototype.currentTeamColor = function() {
+    return this.colors[this.turn % 2];
+  };
+
+  Battle.prototype.isCurrentTurnUnit = function(unit) {
+    return this.currentTeamColor() === unit.color;
   };
 
   Battle.prototype.teamTurnOver = function(team) {
