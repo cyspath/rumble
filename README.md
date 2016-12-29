@@ -25,3 +25,6 @@ There are four stages, each stage increases in difficulty.
 * Player's highest score will be kept in your browser's `localStorage`
 * Thunderbird has shields, which goes away completely after two hits or collisions with enemies. Get hit one more time makes you lose the game.
 * Crushing into greater enemies will not only lose shields but your entire ship as well.
+
+* Generally, a unit can attack after moving, but cannot move after attacking every turn.
+* Smooth unit interaction: can attack without reselecting unit that just moved and reselecting unit when previous selected unit has not moved

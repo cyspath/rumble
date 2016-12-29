@@ -28,7 +28,7 @@ function create() {
   var bs = window.bs = new window.Rumble.LightSoldier({x: 0, y: 64, color: "Blue"});
   var bt = window.bt = new window.Rumble.HeavyTank({ x: 0, y: 0, color: "Blue" });
   var gt1 = new window.Rumble.HeavyTank({ x: 320, y: 320, color: "Green" });
-  var gt2 = new window.Rumble.HeavyTank({ x: 128, y: 320, color: "Green" });
+  var gt2 = new window.Rumble.HeavyTank({ x: 128, y: 128, color: "Green" });
 
   game.physics.arcade.enable([ bt.model, gt1.model ], Phaser.Physics.ARCADE);
 

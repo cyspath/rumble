@@ -76,15 +76,15 @@
   }
 
   Board.prototype.handleTileClick = function() {
-    if (window.animations) { return; };
-    if (window.Rumble.SelectedUnit !== undefined) {
-      this.contextFunction.resetGridBackground();
+    if (window.animations || window.Rumble.SelectedUnit === undefined) {
+      return;
+    };
 
-      var i = this.context.position.y / 64, j = this.context.position.x / 64;
-      if (window.Rumble.PathFinder[[i, j]]) {
-        this.contextFunction.moveUnitTo(this.context, i, j);
-      }
-      this.contextFunction.resetCurrentSelection();
+    this.contextFunction.resetGridBackground();
+
+    var i = this.context.position.y / 64, j = this.context.position.x / 64;
+    if (window.Rumble.PathFinder[[i, j]]) {
+      this.contextFunction.moveUnitTo(this.context, i, j);
     }
   };
 
@@ -98,22 +98,67 @@
     var tween = game.add.tween(unit.model);
     tween.to({ x: tweenPath.x, y: tweenPath.y }, time, "Linear");
     tween.start();
-    tween.onComplete.add(this.addUnit, { unit: unit, contextFunction: this })
+    tween.onComplete.add(this.afterMoveUnit, { unit: unit, contextFunction: this })
   };
 
-  Board.prototype.resetCurrentSelection = function() {
-    window.Rumble.SelectedUnit = undefined;
+  Board.prototype.afterMoveUnit = function() {
+    this.contextFunction.addUnit(this.unit); // update grid's reference of unit
+    this.contextFunction.resetPathFinder(); // reset pathfinder global variable
+
+    this.unit.moved = true;
+    if (this.unit.isTurnOver()) {
+      this.unit.endTurn(); // end current unit's turn
+      this.contextFunction.resetSelectedUnit();
+    }
+
+    window.animations = false; // let global know animation is now complete as well
+    window.battle.checkNextTurn(); // check whether win, take next turn, or doing nothing (keep going current turn)
+
+  };
+
+  Board.prototype.resetPathFinder = function() {
     window.Rumble.PathFinder = undefined;
   };
 
+  Board.prototype.resetSelectedUnit = function() {
+    window.Rumble.SelectedUnit = undefined;
+  };
+
   Board.prototype.handleUnitClick = function() {
-    if (window.animations || this.context.turnOver) { return; };
-    var model = this.context.model;
-    if (window.Rumble.SelectedUnit !== this.context) {
-      var pathFinder = utils.movementCoors(grid, this.context);
-      this.contextFunction.resetGridBackground();
-      this.contextFunction.showMovementForeground(pathFinder);
-      this.contextFunction.updateCurrentSelection(this.context, pathFinder);
+    var unit = this.context;
+    if (window.animations || window.Rumble.SelectedUnit === unit) {
+      return;
+    };
+
+    if (window.Rumble.SelectedUnit === undefined) {
+      return this.contextFunction.selectUnit(unit);
+    }
+
+    var attackedUnits = window.Rumble.SelectedUnit.enemiesInRange();
+    debugger
+    if (attackedUnits.indexOf(unit) !== -1) {
+      // if clicked unit is being attacked...
+      debugger
+    } else {
+      // if clicked unit is being selected
+      return this.contextFunction.selectUnit(unit);
+    }
+  };
+
+  Board.prototype.selectedUnitIsAttacked = function() {
+
+  };
+
+  Board.prototype.selectUnit = function(unit) {
+    if (unit.isTurnOver()) {
+      return;
+    };
+    // move or attack
+    if (!unit.moved) {
+      var pathFinder = utils.movementCoors(this.grid, unit);
+      this.resetGridBackground();
+      this.showMovementForeground(pathFinder);
+      this.updateCurrentSelection(unit, pathFinder);
     }
   };
 
@@ -126,18 +171,9 @@
     return { "i": y/64, "j": x/64 }
   };
 
-  Board.prototype.addUnitInitialize = function(unit) {
+  Board.prototype.addUnit = function(unit) {
     var coor = this.convertXYToCoor(unit.model.position.x, unit.model.position.y);
     this.grid[coor.i][coor.j].unit = unit; // add a reference to unit for grid
-  };
-
-  Board.prototype.addUnit = function() {
-    var coor = this.contextFunction.convertXYToCoor(this.unit.model.position.x, this.unit.model.position.y);
-    this.contextFunction.grid[coor.i][coor.j].unit = this.unit; // add a reference to unit for grid
-    this.unit.endTurn(); // end current unit's turn
-
-    window.animations = false; // let global know animation is now complete as well
-    window.battle.checkNextTurn(); // check whether win, take next turn, or doing nothing (keep going current turn)
   };
 
   Board.prototype.removeUnit = function(unit) {

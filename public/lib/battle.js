@@ -56,7 +56,7 @@
 
   Battle.prototype.teamTurnOver = function(team) {
     for (var i = 0; i < team.length; i++) {
-      if (!team[i].turnOver) {
+      if (!team[i].isTurnOver()) {
         return false;
       }
     }
