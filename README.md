@@ -1,7 +1,7 @@
 # Thunderbird
 <img src='https://raw.github.com/cyspath/thunderbird/gh-pages/assets/images/tb-edited.gif' align='center' padding='10px'>
 
-## [Play it live here] (http://cyspath.github.io/thunderbird/)
+## [Play it live here] (http://107.170.239.150/)
 ### Overview
 
 Simple 2D shooter game made with javascript and canvas. "WASD" keys to navigate your Thunderbird ship, and "J" to fire primary lazer. See if you can beat your own highest score!
