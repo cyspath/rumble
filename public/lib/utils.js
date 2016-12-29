@@ -3,6 +3,13 @@
     window.utils = {};
   }
 
+  utils.inherits = function (ChildClass, ParentClass) {
+    function Surrogate() {};
+    Surrogate.prototype = ParentClass.prototype;
+    ChildClass.prototype = new Surrogate();
+    ChildClass.prototype.constructor = ChildClass;
+  };
+  
   // #random() returns a random number between 0 (inclusive) and 1 (exclusive)
 
   utils.randomBoundBy = function(a,b) {

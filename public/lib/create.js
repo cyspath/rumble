@@ -25,6 +25,7 @@ function create() {
 
   game.physics.startSystem(Phaser.Physics.ARCADE);
 
+  var bs = window.bs = new window.Rumble.LightSoldier({x: 0, y: 64, color: "Blue"});
   var bt = window.bt = new window.Rumble.HeavyTank({ x: 0, y: 0, color: "Blue" });
   var gt1 = new window.Rumble.HeavyTank({ x: 320, y: 320, color: "Green" });
   var gt2 = new window.Rumble.HeavyTank({ x: 128, y: 320, color: "Green" });
@@ -32,7 +33,7 @@ function create() {
   game.physics.arcade.enable([ bt.model, gt1.model ], Phaser.Physics.ARCADE);
 
 
-  var team1 = [bt];
+  var team1 = [bs, bt];
   var team2 = [gt1, gt2];
   battle.start(team1, team2);
 
