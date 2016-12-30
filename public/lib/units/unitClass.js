@@ -22,6 +22,7 @@
     // model.animations.add('right', [2,3], 10, true);
     model.inputEnabled = true;
     model.events.onInputDown.add(window.board.handleUnitClick, { context: this, contextFunction: window.board});
+    model.frame = (this.x/64 < window.board.grid[0].length/2) ? 2 : 1; // face right if placed on left, vice versa
     return model;
   };
 
@@ -92,5 +93,27 @@
     return { "i": this.model.position.y/64, "j": this.model.position.x/64 };
   };
 
+  UnitClass.prototype.animateFrames = function(stepTime, steps, pathXArr) {
+    var that = this;
+    if (pathXArr[1] > pathXArr[0]) {
+      that.model.frame = 2;
+    } else if (pathXArr[1] < pathXArr[0]) {
+      that.model.frame = 1;
+    }
+    var idx = 1;
+    var currentX = pathXArr[idx];
+    var interval = setInterval(function() {
+      idx ++;
+      if (idx >= pathXArr.length) {
+        clearInterval(interval);
+      }
+      if (pathXArr[idx] > currentX) {
+        that.model.frame = 2;
+      } else if (pathXArr[idx] < currentX) {
+        that.model.frame = 1;
+      }
+      currentX = pathXArr[idx];
+    }, stepTime);
+  };
 
 })();

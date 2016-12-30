@@ -8,7 +8,7 @@
     this.hp = 100;
     this.damage =  50;
     this.movementRange = 5;
-    this.landTypeList = { "normal": true, "mountain": false };
+    this.landTypeList = { "normal": true, "forest": false, "rock": false };
 
     var newArgs = {
       x: args.x,

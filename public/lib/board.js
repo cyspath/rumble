@@ -6,9 +6,11 @@
   var land = window.Rumble.land;
 
   var Board = window.Rumble.Board = function () {
-    this.grid = this.build();
-    this.addDesert();
-    this.addMountains();
+    this.grid = this.buildGrid(10, 10);
+    this.addGrassland();
+    this.addForests();
+    this.addRocks();
+    this.overlay = this.buildOverlay(10, 10);
   };
 
   Board.prototype.handleUnitClick = function() {
@@ -25,6 +27,7 @@
     if (!window.Rumble.SelectedUnit.attacked && attackedUnits.indexOf(unit) !== -1) {
       // if clicked unit is being attacked...
       debugger
+      this.contextFunction.resetGridBackground();
       window.Rumble.SelectedUnit.attacked = true;
       if (window.Rumble.SelectedUnit.isTurnOver()) {
         this.contextFunction.endUnitTurn(window.Rumble.SelectedUnit);
@@ -64,7 +67,7 @@
   Board.prototype.showRangeFinder = function(unit) {
     var atkRangeCoors = unit.atkRangeCoors();
     window.Rumble.AtkRangeCoors = atkRangeCoors;
-    this.showRangeFinderShade(atkRangeCoors);
+    this.showRangeFinderOverlay(atkRangeCoors);
   };
 
   Board.prototype.handleTileClick = function() {
@@ -85,10 +88,12 @@
     var unit = window.Rumble.SelectedUnit
     this.removeUnit(unit);
     var pathObj = window.Rumble.PathFinder[[i, j]];
-    var time = (unit.movementRange - pathObj.stepsLeft) * 300;
+    var steps = unit.movementRange - pathObj.stepsLeft;
+    var stepTime = 300;
     var tweenPath = window.utils.splitPathArray(pathObj.path);
+    unit.animateFrames(stepTime, steps, tweenPath.x);
     var tween = game.add.tween(unit.model);
-    tween.to({ x: tweenPath.x, y: tweenPath.y }, time, "Linear");
+    tween.to({ x: tweenPath.x, y: tweenPath.y }, (stepTime * steps), "Linear", this.cb);
     tween.start();
     tween.onComplete.add(this.afterMoveUnit, { unit: unit, contextFunction: this })
   };
@@ -155,34 +160,51 @@
 
   ////////////////////////// SET UP THE GRID //////////////////////////
 
-  Board.prototype.build = function() {
-    return this.generateGrid(10, 10);
-  };
-
-  Board.prototype.generateGrid = function(width, height) {
+  Board.prototype.buildGrid = function(height, width) {
     var m = new Array(height);
     for (var i = 0; i < height; i++) {
       m[i] = new Array(width);
       for (var j = 0; j < m[i].length; j++) {
-        m[i][j] = { pos: [i, j], land: undefined, tile: undefined, unit: undefined };
+        m[i][j] = { pos: [i, j], tile: undefined, land: undefined, unit: undefined };
       }
     }
     return m;
   };
 
-  Board.prototype.addDesert = function() {
+  Board.prototype.buildOverlay = function(height, width) {
+    var m = new Array(height);
+    for (var i = 0; i < height; i++) {
+      m[i] = new Array(width);
+      for (var j = 0; j < m[i].length; j++) {
+        m[i][j] = { pos: [i, j], tile: undefined, sight: land.sight, capture: undefined };
+      }
+    }
+    return m;
+  };
+
+  Board.prototype.addGrassland = function() {
     for (var i = 0; i < this.grid.length; i++) {
       for (var j = 0; j < this.grid[i].length; j++) {
-        this.grid[i][j].land = land.desert;
+        this.grid[i][j].land = land.grassland;
       }
     }
   };
 
-  Board.prototype.addMountains = function() {
+  Board.prototype.addForests = function() {
     for (var i = 0; i < this.grid.length; i++) {
       for (var j = 0; j < this.grid[i].length; j++) {
         if (utils.percentChance(10)) {
-          this.grid[i][j].land = [land.desertMountain1, land.desertMountain2, land.desertMountain3][utils.randomBoundBy(0, 2)];
+          this.grid[i][j].land = [land.grasslandForest1, land.grasslandForest2][utils.randomBoundBy(0, 2)];
+        }
+      }
+    }
+  };
+
+  Board.prototype.addRocks = function() {
+    for (var i = 0; i < this.grid.length; i++) {
+      for (var j = 0; j < this.grid[i].length; j++) {
+        if (utils.percentChance(5)) {
+          this.grid[i][j].land = land.grasslandRock;
         }
       }
     }
@@ -191,7 +213,8 @@
   Board.prototype.resetGridBackground = function () {
     for (var i = 0; i < this.grid.length; i++) {
       for (var j = 0; j < this.grid[i].length; j++) {
-        this.grid[i][j].tile.frame = this.grid[i][j].land.default;;
+        this.grid[i][j].tile.frame = this.grid[i][j].land.default;
+        this.overlay[i][j].tile.frame = this.overlay[i][j].sight.default;
       }
     }
   };
@@ -203,9 +226,9 @@
     }
   };
 
-  Board.prototype.showRangeFinderShade = function (coors) {
+  Board.prototype.showRangeFinderOverlay = function (coors) {
     coors.forEach(function(coor) {
-      grid[coor[0]][coor[1]].tile.frame = grid[coor[0]][coor[1]].land.rangeFinderShade;
+      this.overlay[coor[0]][coor[1]].tile.frame = this.overlay[coor[0]][coor[1]].sight.visible;
     })
   };
 
@@ -221,6 +244,16 @@
         tile.events.onInputDown.add(this.handleTileClick, { context: tile, contextFunction: this });
 
         this.grid[i][j].tile = tile;
+      }
+    }
+  };
+
+  Board.prototype.createForeground = function() {
+    for (var i = 0; i < this.grid.length; i++) {
+      for (var j = 0; j < this.grid[i].length; j++) {
+        tile = window.game.add.sprite(j * 64, i * 64, 'tiles');
+        tile.frame = this.overlay[i][j].sight.default;
+        this.overlay[i][j].tile = tile;
       }
     }
   };
