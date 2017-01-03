@@ -11,6 +11,7 @@
     this.moved = true;
     this.attacked = true;
     this.model = this.addModel();
+    this.hpBar = this.addHpBAR();
     this.boardAddUnit();
   };
 
@@ -24,6 +25,13 @@
     model.events.onInputDown.add(window.board.handleUnitClick, { context: this, contextFunction: window.board});
     model.frame = (this.x/64 < window.board.grid[0].length/2) ? 2 : 1; // face right if placed on left, vice versa
     return model;
+  };
+
+  UnitClass.prototype.addHpBAR = function() {
+    var style = { font: "10px Arial", fill: "#ffffff", align: "center", backgroundColor: "#ff8888" };
+    var text = game.add.text(0, 0, this.hp, style);
+    this.model.addChild(text);
+    return text;
   };
 
   UnitClass.prototype.boardAddUnit = function() {
@@ -115,5 +123,9 @@
       currentX = pathXArr[idx];
     }, stepTime);
   };
+
+  UnitClass.prototype.updateHpBar = function() {
+    this.hpBar.setText(this.hp);
+  }
 
 })();
