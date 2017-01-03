@@ -126,6 +126,37 @@
 
   UnitClass.prototype.updateHpBar = function() {
     this.hpBar.setText(this.hp);
-  }
+  };
+
+  UnitClass.prototype.attack = function(unit) {
+    var attacker = this;
+    var defender = unit;
+
+    var attackerDamage = attacker.currentDamage();
+    defender.hp = Math.max(defender.hp - attackerDamage, 0);
+    defender.updateHpBar();
+
+    if (defender.hp === 0) {
+      // defender dies
+      defender.model.kill();
+      defender = undefined;
+    } else {
+      // defender strikes back
+      var defenderDamage = defender.currentDamage();
+      attacker.hp = Math.max(attacker.hp - defenderDamage, 0);
+      attacker.updateHpBar();
+      if (attacker.hp === 0) {
+        // attacker dies
+        attacker.model.kill();
+        attacker = undefined;
+      }
+    }
+
+  };
+
+  UnitClass.prototype.currentDamage = function() {
+    var percentHp = this.hp / this.maxHp;
+    return Math.max(Math.floor(this.maxDamage * percentHp), 1);
+  };
 
 })();
