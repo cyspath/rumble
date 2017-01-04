@@ -26,7 +26,7 @@
     var attackedUnits = window.Rumble.SelectedUnit.enemiesInRange();
     if (!window.Rumble.SelectedUnit.attacked && attackedUnits.indexOf(unit) !== -1) {
       // if clicked unit is being attacked...
-      debugger
+      window.Rumble.SelectedUnit.attack(unit);
       this.contextFunction.resetGridBackground();
       window.Rumble.SelectedUnit.attacked = true;
       if (window.Rumble.SelectedUnit.isTurnOver()) {
