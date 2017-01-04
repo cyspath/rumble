@@ -19,7 +19,7 @@
 <body>
 
 <script type="text/javascript">
-  var board = new window.Rumble.Board
+  // var board = new window.Rumble.Board;
 </script>
 
 <script type="text/javascript" src="lib/preload.js"></script>
@@ -28,7 +28,7 @@
 
 <script type="text/javascript">
   var animations = false;
-  var game = new Phaser.Game(640, 640, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+  game = new Phaser.Game(640, 640, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 </script>
 
 <input type="button" id="refresh" style="display:block; position:fixed" value="Restart" onClick="window.location.reload()">

@@ -9,7 +9,7 @@
     this.hp = this.maxHp;
     this.maxDamage =  50;
     this.movementRange = 5;
-    this.landTypeList = { "normal": true, "forest": false, "rock": false };
+    this.landTypeList = { "normal": true, "forest": true, "rock": false };
 
     var newArgs = {
       x: args.x,

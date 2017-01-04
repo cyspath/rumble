@@ -30,18 +30,24 @@ function create() {
 
   // create units
   game.physics.startSystem(Phaser.Physics.ARCADE);
-  var bs = window.bs = new window.Rumble.LightSoldier({x: 128, y: 64, color: "Blue"});
-  var bt = window.bt = new window.Rumble.HeavyTank({ x: 128, y: 0, color: "Blue" });
-  var gt1 = new window.Rumble.HeavyTank({ x: 320, y: 320, color: "Green" });
-  var gt2 = new window.Rumble.HeavyTank({ x: 256, y: 128, color: "Green" });
-  game.physics.arcade.enable([ bt.model, gt1.model ], Phaser.Physics.ARCADE);
 
+  var team1 = [
+    new window.Rumble.LightSoldier({x: 0 * 64, y: 7 * 64, color: "Blue"}),
+    new window.Rumble.LightSoldier({x: 0 * 64, y: 8 * 64, color: "Blue"}),
+    new window.Rumble.LightSoldier({x: 1 * 64, y: 8 * 64, color: "Blue"}),
+    new window.Rumble.HeavyTank({ x: 1 * 64, y: 7 * 64, color: "Blue" })
+  ];
+  var team2 = [
+    new window.Rumble.HeavyTank({ x: 7 * 64, y: 1 * 64, color: "Green" }),
+    new window.Rumble.HeavyTank({ x: 8 * 64, y: 2 * 64, color: "Green" })
+  ];
+
+  game.physics.arcade.enable(team1.concat(team2).map(function(unit) { return unit.model; }), Phaser.Physics.ARCADE);
+  
   // creat foreground
   board.createForeground();
 
   // start battle
-  var team1 = [bs, bt];
-  var team2 = [gt1, gt2];
   battle.start(team1, team2);
 
   cursors = game.input.keyboard.createCursorKeys();
