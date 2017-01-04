@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Rumble</title>
+  <script type="text/javascript" src="jquery/dist/jquery.min.js"></script>
   <script type="text/javascript" src="js/phaser.min.js"></script>
   <script type="text/javascript" src="lib/land.js"></script>
   <script type="text/javascript" src="lib/utils.js"></script>
@@ -29,6 +30,9 @@
   var animations = false;
   var game = new Phaser.Game(640, 640, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 </script>
+
+<input type="button" id="refresh" style="display:block; position:fixed" value="Restart" onClick="window.location.reload()">
+
 
 </body>
 </html>

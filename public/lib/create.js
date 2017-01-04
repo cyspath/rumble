@@ -18,11 +18,11 @@ window.Rumble.SelectedUnit;
 window.Rumble.PathFinder;
 window.Rumble.AtkRangeCoors;
 
-setInterval(function () {
-  var su = window.Rumble.SelectedUnit;
-  var txt = su ? (su.type + su.color) : su;
-  console.log(txt);
-}, 500)
+// setInterval(function () {
+//   var su = window.Rumble.SelectedUnit;
+//   var txt = su ? (su.type + su.color) : su;
+//   console.log(txt);
+// }, 500)
 
 function create() {
   // create background
@@ -43,7 +43,6 @@ function create() {
   var team1 = [bs, bt];
   var team2 = [gt1, gt2];
   battle.start(team1, team2);
-
 
   cursors = game.input.keyboard.createCursorKeys();
 

@@ -137,21 +137,23 @@
     defender.updateHpBar();
 
     if (defender.hp === 0) {
-      // defender dies
-      defender.model.kill();
-      defender = undefined;
+      defender.destroy(); // defender dies
     } else {
       // defender strikes back
       var defenderDamage = defender.currentDamage();
       attacker.hp = Math.max(attacker.hp - defenderDamage, 0);
       attacker.updateHpBar();
       if (attacker.hp === 0) {
-        // attacker dies
-        attacker.model.kill();
-        attacker = undefined;
+        attacker.destroy(); // attacker dies
       }
     }
+  };
 
+  UnitClass.prototype.destroy = function() {
+    var coor = this.currentGridCoor();
+    window.board.grid[coor.i][coor.j].unit = undefined; // remove from board
+    this.model.kill(); // destroy phaser sprite
+    window.battle.deleteUnit(this); // remove from team from battle
   };
 
   UnitClass.prototype.currentDamage = function() {

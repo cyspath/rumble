@@ -26,8 +26,7 @@
   Battle.prototype.checkNextTurn = function() {
     var winner = this.winCondition();
     if (winner) {
-      // needs a way to freez the game
-      return console.log("Turn: " + this.turn + ", player " + winner + " won!!!");
+      this.displayGameOverMessage(winner);
     } else if (this.teamTurnOver(this.currentTeam())) {
       // if current team all units have made their moves, proceed to next turn
       this.nextTurn();
@@ -50,13 +49,28 @@
     }
   };
 
+  Battle.prototype.displayGameOverMessage = function(winner) {
+    var bar = game.add.graphics();
+    bar.beginFill(0x000000, 0.4);
+    bar.drawRect(0, 100, 800, 100);
+
+    var message = game.add.bitmapText(0, 140, 'carrier_command', "PLAYER " + winner + " WON!", 20);
+    message.align = 'center';
+    message.x = (window.game.width / 2) - (message.textWidth / 2);
+  };
+
+
   Battle.prototype.currentTeam = function() {
     var n = this.turn % 2 === 0 ? 2 : 1;
-    return this["team" + n]
+    return this["team" + n];
   };
 
   Battle.prototype.currentTeamColor = function() {
     return this.colors[this.turn % 2];
+  };
+
+  Battle.prototype.unitTeam = function(unit) {
+    return unit.color === this.colors[1] ? this.team1 : this.team2;
   };
 
   Battle.prototype.isCurrentTurnUnit = function(unit) {
@@ -70,6 +84,14 @@
       }
     }
     return true;
+  };
+
+  Battle.prototype.deleteUnit = function(unit) {
+    var team = this.unitTeam(unit);
+    var idx = team.indexOf(unit);
+    if (idx > -1) {
+      team.splice(idx, 1);
+    }
   };
 
 })();
