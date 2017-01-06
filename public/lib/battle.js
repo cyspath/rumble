@@ -8,6 +8,11 @@
     this.team1 = [];
     this.team2 = [];
     this.colors = ["Green", "Blue"]; // staring, turn 1, team's color is 'Blue'
+    this.damageArmorMultiplier = {
+      "light-light": 1, "light-medium": 1, "light-heavy": 0.5,
+      "medim-light": 1, "medim-medium": 1, "medim-heavy": 1,
+      "heavy-light": 0.5, "heavy-medium": 1, "heavy-heavy": 1.5
+    }
   };
 
   Battle.prototype.start = function(team1, team2) {
@@ -91,6 +96,13 @@
       }
     }
     return true;
+  };
+
+  Battle.prototype.resolveDamage = function(initiator, retaliator) {
+    var actualDamage = initiator.currentDamage() * (this.damageArmorMultiplier[initiator.damageType + '-' + retaliator.armorType]);
+    retaliator.hp = Math.max(retaliator.hp - actualDamage, 0);
+    retaliator.updateHpBar();
+    console.log(initiator.color + initiator.type + " did damage: " + actualDamage);
   };
 
   Battle.prototype.deleteUnit = function(unit) {

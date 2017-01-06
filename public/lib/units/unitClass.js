@@ -131,18 +131,13 @@
   UnitClass.prototype.attack = function(unit) {
     var attacker = this;
     var defender = unit;
-
-    var attackerDamage = attacker.currentDamage();
-    defender.hp = Math.max(defender.hp - attackerDamage, 0);
-    defender.updateHpBar();
+    battle.resolveDamage(attacker, defender);
 
     if (defender.hp === 0) {
       defender.destroy(); // defender dies
     } else {
       // defender strikes back
-      var defenderDamage = defender.currentDamage();
-      attacker.hp = Math.max(attacker.hp - defenderDamage, 0);
-      attacker.updateHpBar();
+      battle.resolveDamage(defender, attacker);
       if (attacker.hp === 0) {
         attacker.destroy(); // attacker dies
       }

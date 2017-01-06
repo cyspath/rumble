@@ -22,12 +22,15 @@ There are four stages, each stage increases in difficulty.
 
 ### Additional Details
 
-* Player's highest score will be kept in your browser's `localStorage`
-* Thunderbird has shields, which goes away completely after two hits or collisions with enemies. Get hit one more time makes you lose the game.
-* Crushing into greater enemies will not only lose shields but your entire ship as well.
-
 * Generally, a unit can attack after moving, but cannot move after attacking every turn.
 * Smooth unit interaction: can attack without reselecting unit that just moved and reselecting unit when previous selected unit has not moved
+
+### Gameplay Must-knows:
+
+* Damage type - armor type calculation, actual damage done:
+"light damage vs. light armor": 1, "light damage vs. medium armor": 1, "light damage vs. heavy armor": 0.5
+"medim damage vs. light armor": 1, "medim damage vs. medium armor": 1, "medim damage vs. heavy armor": 1
+"heavy damage vs. light armor": 0.5, "heavy damage vs. medium armor": 1, "heavy damage vs. heavy armor": 1.5
 
 ### Dev process
 
