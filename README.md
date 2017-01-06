@@ -28,9 +28,11 @@ There are four stages, each stage increases in difficulty.
 ### Gameplay Must-knows:
 
 * Damage type - armor type calculation, actual damage done:
+```
 "light damage vs. light armor": 1, "light damage vs. medium armor": 1, "light damage vs. heavy armor": 0.5
 "medim damage vs. light armor": 1, "medim damage vs. medium armor": 1, "medim damage vs. heavy armor": 1
 "heavy damage vs. light armor": 0.5, "heavy damage vs. medium armor": 1, "heavy damage vs. heavy armor": 1.5
+```
 
 ### Dev process
 
