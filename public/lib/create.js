@@ -43,7 +43,10 @@ function create() {
   ];
 
   game.physics.arcade.enable(team1.concat(team2).map(function(unit) { return unit.model; }), Phaser.Physics.ARCADE);
-  
+
+  // add control panel
+  battle.addControlPanel();
+
   // creat foreground
   board.createForeground();
 

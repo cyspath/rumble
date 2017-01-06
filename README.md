@@ -28,3 +28,8 @@ There are four stages, each stage increases in difficulty.
 
 * Generally, a unit can attack after moving, but cannot move after attacking every turn.
 * Smooth unit interaction: can attack without reselecting unit that just moved and reselecting unit when previous selected unit has not moved
+
+### Dev process
+
+* units initial stats inspired by http://kongregate.wikia.com/wiki/Units_of_Battalion_Versions
+* fonts used from https://cooltext.com/

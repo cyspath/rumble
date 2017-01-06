@@ -7,6 +7,8 @@ function preload() {
 
     game.load.spritesheet('tiles', 'images/tiles2.png', 64, 64);
 
+    game.load.spritesheet('button_end_turn', 'images/button_end_turn.png', 267, 85);
+
 
     // game.load.image('sky', 'assets/sky.png');
 

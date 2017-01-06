@@ -23,6 +23,12 @@
     }
   };
 
+  Battle.prototype.endTeamTurns = function(team) {
+    for (var i = 0; i < team.length; i++) {
+      team[i].endTurn();
+    }
+  };
+
   Battle.prototype.checkNextTurn = function() {
     var winner = this.winCondition();
     if (winner) {
@@ -34,6 +40,7 @@
   };
 
   Battle.prototype.nextTurn = function() {
+    this.endTeamTurns(this.currentTeam());
     this.turn ++;
     console.log("Turn " + this.turn);
     this.resetTeamTurns(this.currentTeam());
@@ -91,6 +98,16 @@
     var idx = team.indexOf(unit);
     if (idx > -1) {
       team.splice(idx, 1);
+    }
+  };
+
+  // CONTROL PANEL
+  Battle.prototype.addControlPanel = function () {
+    var that = this;
+    var button = game.add.button(0, 640, 'button_end_turn', actionOnClick, that, 1, 0, 1, 0); // over, out, down
+    button.scale.setTo(0.5, 0.5); // make button 1/2 size
+    function actionOnClick() {
+      this.nextTurn();
     }
   };
 

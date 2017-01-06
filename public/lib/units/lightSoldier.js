@@ -5,10 +5,12 @@
 
   var LightSoldier = window.Rumble.LightSoldier = function (args) {
     this.type = "lightSoldier";
-    this.maxHp = 20;
-    this.hp = this.maxHp;
-    this.maxDamage = 10;
+    this.maxHp = 50;
+    this.maxDamage = 22;
     this.movementRange = 3;
+    this.armorType = "light";
+    this.damageType = "light";
+    this.hp = this.maxHp;
     this.landTypeList = { "normal": true, "forest": true, "rock": true };
 
     var newArgs = {
