@@ -3,7 +3,7 @@
     window.Rumble = {};
   }
 
-  var land = window.Rumble.land;
+  var land = window.Rumble.Terrain;
 
   var Board = window.Rumble.Board = function () {
     this.grid = this.buildGrid(10, 10);
@@ -88,12 +88,12 @@
     var unit = window.Rumble.SelectedUnit
     this.removeUnit(unit);
     var pathObj = window.Rumble.PathFinder[[i, j]];
-    var steps = unit.movementRange - pathObj.stepsLeft;
-    var stepTime = 300;
+    var moves = pathObj.path.length;
+    var moveTime = 300;
     var tweenPath = window.utils.splitPathArray(pathObj.path);
-    unit.animateFrames(stepTime, steps, tweenPath.x);
+    unit.animateFrames(moveTime, moves, tweenPath.x);
     var tween = game.add.tween(unit.model);
-    tween.to({ x: tweenPath.x, y: tweenPath.y }, (stepTime * steps), "Linear", this.cb);
+    tween.to({ x: tweenPath.x, y: tweenPath.y }, (moveTime * moves), "Linear", this.cb);
     tween.start();
     tween.onComplete.add(this.afterMoveUnit, { unit: unit, contextFunction: this })
   };

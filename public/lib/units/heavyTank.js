@@ -11,7 +11,7 @@
     this.armorType = "heavy";
     this.damageType = "heavy";
     this.hp = this.maxHp;
-    this.landTypeList = { "normal": true, "forest": true, "rock": false };
+    this.movementType = "track";
 
     var newArgs = {
       x: args.x,

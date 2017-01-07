@@ -156,4 +156,8 @@
     return Math.max(Math.floor(this.maxDamage * percentHp), 1);
   };
 
+  UnitClass.prototype.currentCoor = function() {
+    return window.board.convertXYToCoor(this.model.position.x, this.model.position.y);
+  };
+
 })();

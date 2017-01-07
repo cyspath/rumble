@@ -11,7 +11,7 @@
     this.armorType = "light";
     this.damageType = "light";
     this.hp = this.maxHp;
-    this.landTypeList = { "normal": true, "forest": true, "rock": true };
+    this.movementType = "foot";
 
     var newArgs = {
       x: args.x,
