@@ -19,8 +19,8 @@
     var model = game.add.sprite(this.x, this.y, this.type + this.color);
     model.tint = 0xACACAC;
 
-    // model.animations.add('left', [0,1], 10, true);
-    // model.animations.add('right', [2,3], 10, true);
+    model.animations.add('1', [0,1], 100, true);
+    model.animations.add('2', [2,3], 100, true);
     model.inputEnabled = true;
     model.events.onInputDown.add(window.board.handleUnitClick, { context: this, contextFunction: window.board});
     model.frame = (this.x/64 < window.board.grid[0].length/2) ? 2 : 1; // face right if placed on left, vice versa
@@ -108,6 +108,8 @@
     } else if (pathXArr[1] < pathXArr[0]) {
       that.model.frame = 1;
     }
+    // that.model.frame < 2 ? that.model.animations.play('1') : that.model.animations.play('2');
+
     var idx = 1;
     var currentX = pathXArr[idx];
     var interval = setInterval(function() {
@@ -120,6 +122,8 @@
       } else if (pathXArr[idx] < currentX) {
         that.model.frame = 1;
       }
+      that.model.frame < 2 ? that.model.animations.play('1') : that.model.animations.play('2');
+      that.model.animations.play(that.model.frame)
       currentX = pathXArr[idx];
     }, stepTime);
   };

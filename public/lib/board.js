@@ -99,6 +99,7 @@
   };
 
   Board.prototype.afterMoveUnit = function() {
+    this.unit.model.animations.stop();
     window.animations = false; // let global know animation is now complete as well
 
     this.contextFunction.addUnit(this.unit); // update grid's reference of unit

@@ -35,7 +35,7 @@ function create() {
     new window.Rumble.LightSoldier({x: 0 * 64, y: 7 * 64, color: "Blue"}),
     new window.Rumble.LightSoldier({x: 0 * 64, y: 8 * 64, color: "Blue"}),
     new window.Rumble.LightSoldier({x: 1 * 64, y: 8 * 64, color: "Blue"}),
-    new window.Rumble.HeavyTank({ x: 1 * 64, y: 7 * 64, color: "Blue" })
+    new window.Rumble.HeavyTank({ x: 1 * 64, y: 7 * 64, color: "Yellow" })
   ];
   var team2 = [
     new window.Rumble.HeavyTank({ x: 7 * 64, y: 1 * 64, color: "Green" }),
