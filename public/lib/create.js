@@ -32,14 +32,19 @@ function create() {
   game.physics.startSystem(Phaser.Physics.ARCADE);
 
   var team1 = [
-    new window.Rumble.LightSoldier({x: 0 * 64, y: 7 * 64, color: "Blue"}),
-    new window.Rumble.LightSoldier({x: 0 * 64, y: 8 * 64, color: "Blue"}),
-    new window.Rumble.LightSoldier({x: 1 * 64, y: 8 * 64, color: "Blue"}),
+    new window.Rumble.LightSoldier({x: 0 * 64, y: 7 * 64, color: "Yellow"}),
+    new window.Rumble.LightSoldier({x: 0 * 64, y: 8 * 64, color: "Yellow"}),
+    new window.Rumble.LightSoldier({x: 1 * 64, y: 8 * 64, color: "Yellow"}),
+    new window.Rumble.BazookaSoldier({x: 1 * 64, y: 6 * 64, color: "Yellow"}),
+    new window.Rumble.BazookaSoldier({x: 2 * 64, y: 8 * 64, color: "Yellow"}),
     new window.Rumble.HeavyTank({ x: 1 * 64, y: 7 * 64, color: "Yellow" })
   ];
   var team2 = [
-    new window.Rumble.HeavyTank({ x: 7 * 64, y: 1 * 64, color: "Green" }),
-    new window.Rumble.HeavyTank({ x: 8 * 64, y: 2 * 64, color: "Green" })
+    new window.Rumble.LightSoldier({ x: 7 * 64, y: 1 * 64, color: "Red"}),
+    new window.Rumble.LightSoldier({ x: 8 * 64, y: 2 * 64, color: "Red"}),
+    new window.Rumble.BazookaSoldier({ x: 8 * 64, y: 3 * 64, color: "Red"}),
+    new window.Rumble.HeavyTank({ x: 8 * 64, y: 1 * 64, color: "Red" }),
+    new window.Rumble.HeavyTank({ x: 9 * 64, y: 3 * 64, color: "Red" })
   ];
 
   game.physics.arcade.enable(team1.concat(team2).map(function(unit) { return unit.model; }), Phaser.Physics.ARCADE);

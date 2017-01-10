@@ -7,7 +7,7 @@
     this.turn = 1;
     this.team1 = [];
     this.team2 = [];
-    this.colors = ["Green", "Blue"]; // staring, turn 1, team's color is 'Blue'
+    this.colors = ["Red", "Yellow"]; // staring, turn 1, team's color is 'Blue'
   };
 
   Battle.prototype.start = function(team1, team2) {
