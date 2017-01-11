@@ -16,8 +16,9 @@ function preload() {
     game.load.spritesheet('tiles', 'images/tiles.png', 64, 64);
 
     game.load.spritesheet('button_end_turn', 'images/button_end_turn.png', 267, 85);
+    game.load.spritesheet('button_refresh', 'images/button_refresh.png', 55, 47);
 
-
+    game.load.image('panelBackground', 'images/panelBackground.png');
     // game.load.image('sky', 'assets/sky.png');
 
 }

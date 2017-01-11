@@ -112,10 +112,19 @@
   // CONTROL PANEL
   Battle.prototype.addControlPanel = function () {
     var that = this;
-    var button = game.add.button(0, 640, 'button_end_turn', actionOnClick, that, 1, 0, 1, 0); // over, out, down
-    button.scale.setTo(0.5, 0.5); // make button 1/2 size
-    function actionOnClick() {
+    game.add.sprite(0, 640, 'panelBackground');
+
+    var button_end_turn = game.add.button(442, 650, 'button_end_turn', actionOnClickEndTurn, that, 1, 0, 1, 0); // over, out, down
+    button_end_turn.scale.setTo(0.5, 0.5); // make button 1/2 size
+    function actionOnClickEndTurn() {
       this.nextTurn();
+    }
+
+    var button_refresh = game.add.button(575, 705, 'button_refresh', actionOnClickRefresh, that, 1, 0, 1, 0); // over, out, down
+    function actionOnClickRefresh() {
+      if (confirm("Are you sure you want to reload the game?")) {
+        window.location.reload();
+      }
     }
   };
 
