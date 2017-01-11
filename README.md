@@ -24,6 +24,7 @@ There are four stages, each stage increases in difficulty.
 
 * Generally, a unit can attack after moving, but cannot move after attacking every turn.
 * Smooth unit interaction: can attack without reselecting unit that just moved and reselecting unit when previous selected unit has not moved
+* Units have moved or attacked controlled by you will no longer display movement and attack finder. However, anytime during your turn you may select opponent's units to see their movement and attack finder in order to make a good move.
 
 ### Gameplay Must-knows:
 

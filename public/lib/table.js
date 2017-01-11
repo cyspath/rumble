@@ -13,26 +13,31 @@
   Rumble.TerrainMovementReduction = {
     "foot-normal":  "NO CHANGE",
     "foot-forest":  "REDUCED BY 1",
+    "foot-bushes":  "NO CHANGE",
     "foot-rock":    "REDUCED BY 2",
     "foot-road":    "NO CHANGE",
     "foot-sea":     undefined,
     // "wheel-normal": "NO CHANGE",
     // "wheel-forest": "REDUCED BY 2",
+    // "wheel-bushes": "REDUCED BY 2",
     // "wheel-rock":   undefined,
     // "wheel-road":   "INCREASED BY 2",
     // "wheel-sea":    undefined,
     "track-normal": "NO CHANGE",
-    "track-forest": "REDUCED BY 1",
+    "track-forest": undefined,
+    "track-bushes": "REDUCED BY 1",
     "track-rock":   undefined,
     "track-road":   "NO CHANGE",
     "track-sea":    undefined,
     "plane-normal": "NO CHANGE",
     "plane-forest": "NO CHANGE",
+    "plane-bushes": "NO CHANGE",
     "plane-rock":   "NO CHANGE",
     "plane-road":   "NO CHANGE",
     "plane-sea":    "NO CHANGE",
     "ship-normal":  undefined,
     "ship-forest":  undefined,
+    "ship-bushes":  undefined,
     "ship-rock":    undefined,
     "ship-road":    undefined,
     "ship-sea":     "NO CHANGE"
@@ -43,8 +48,10 @@
     grasslandForest1:  { default: 10, pathFinderShade: 11, type: "forest" },
     grasslandForest2:  { default: 12, pathFinderShade: 13, type: "forest" },
     grasslandForest3:  { default: 14, pathFinderShade: 15, type: "forest" },
-    grasslandRock:     { default: 24, pathFinderShade: 25, type: "rock" },
-    sight:             { default: 30, visible: 31, type: "sight" }
+    grasslandBushes1:  { default: 2, pathFinderShade: 3, type: "bushes" },
+    grasslandBushes2:  { default: 4, pathFinderShade: 5, type: "bushes" },
+    grasslandRock:     { default: 22, pathFinderShade: 23, type: "rock" },
+    overlayFrame:      { default: 30, sight: 31, selected1: 40, selected2: 41 }
   };
 
 

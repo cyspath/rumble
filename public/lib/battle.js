@@ -44,6 +44,7 @@
     this.turn ++;
     console.log("Turn " + this.turn);
     this.resetTeamTurns(this.currentTeam());
+    window.board.resetGridBackground(); // reset background
   };
 
   Battle.prototype.winCondition = function() {

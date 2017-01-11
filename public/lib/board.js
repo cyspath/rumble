@@ -46,10 +46,16 @@
     // move or attack
     if (!unit.moved || !window.battle.isCurrentTurnUnit(unit)) {
       this.showPathFinder(unit);
+      this.showOverlaySelected(unit, "1");
     }
 
     if (!unit.attacked || !window.battle.isCurrentTurnUnit(unit)) {
       this.showRangeFinder(unit);
+      this.showOverlaySelected(unit, "1");
+    }
+
+    if (unit.isTurnOver()) {
+      this.showOverlaySelected(unit, "2");
     }
 
   };
@@ -61,7 +67,7 @@
   Board.prototype.showPathFinder = function(unit) {
     var pathFinder = utils.movementCoors(this.grid, unit);
     window.Rumble.PathFinder = pathFinder;
-    this.showPathFinderShade(pathFinder);
+    this.showPathFinderShade(pathFinder, unit);
   };
 
   Board.prototype.showRangeFinder = function(unit) {
@@ -111,6 +117,7 @@
       this.contextFunction.endUnitTurn(this.unit);
     } else if (!this.unit.attacked) {
       this.contextFunction.showRangeFinder(this.unit);
+      this.contextFunction.showOverlaySelected(this.unit, "1");
       // and can still attack
     }
   };
@@ -177,7 +184,7 @@
     for (var i = 0; i < height; i++) {
       m[i] = new Array(width);
       for (var j = 0; j < m[i].length; j++) {
-        m[i][j] = { pos: [i, j], tile: undefined, sight: land.sight, capture: undefined };
+        m[i][j] = { pos: [i, j], tile: undefined, overlayFrame: land.overlayFrame, capture: undefined };
       }
     }
     return m;
@@ -195,7 +202,7 @@
     var a = [[0,0],[0,1],[0,2],[0,7],[0,8],[1,0],[1,1],[2,0],[1,4],[2,4],[2,3],[9,2],[9,3],[8,3],[8,4],[7,5],[9,5],[8,8],[7,9],[3,7],[4,7],[4,8],[4,9],[5,8],[5,9]]
     var that = this;
     a.forEach(function(coor) {
-        that.grid[coor[0]][coor[1]].land = [land.grasslandForest1, land.grasslandForest2, land.grasslandForest3][utils.randomBoundBy(0, 3)];
+        that.grid[coor[0]][coor[1]].land = [land.grasslandForest1, land.grasslandForest2, land.grasslandForest3, land.grasslandBushes1, land.grasslandBushes2][utils.randomBoundBy(0, 5)];
     })
     // for (var i = 0; i < this.grid.length; i++) {
     //   for (var j = 0; j < this.grid[i].length; j++) {
@@ -224,22 +231,28 @@
   Board.prototype.resetGridBackground = function () {
     for (var i = 0; i < this.grid.length; i++) {
       for (var j = 0; j < this.grid[i].length; j++) {
+        this.grid[i][j].tile.tint = 0xFFFFFF;
         this.grid[i][j].tile.frame = this.grid[i][j].land.default;
-        this.overlay[i][j].tile.frame = this.overlay[i][j].sight.default;
+        // this.overlay[i][j].tile.tint = 0xFFFFFF;
+        this.overlay[i][j].tile.frame = this.overlay[i][j].overlayFrame.default;
       }
     }
   };
 
-  Board.prototype.showPathFinderShade = function (coors) {
+  Board.prototype.showPathFinderShade = function (coors, unit) {
     for (var coor in coors) {
       coor = coor.split(",")
-      grid[coor[0]][coor[1]].tile.frame = grid[coor[0]][coor[1]].land.pathFinderShade;
+      if (unit.moved) { // show darker tint
+        grid[coor[0]][coor[1]].tile.tint = 0xCCCCCC;
+      } else {  // show ligher frame
+        grid[coor[0]][coor[1]].tile.frame = grid[coor[0]][coor[1]].land.pathFinderShade;
+      }
     }
   };
 
   Board.prototype.showRangeFinderOverlay = function (coors) {
     coors.forEach(function(coor) {
-      this.overlay[coor[0]][coor[1]].tile.frame = this.overlay[coor[0]][coor[1]].sight.visible;
+      this.overlay[coor[0]][coor[1]].tile.frame = this.overlay[coor[0]][coor[1]].overlayFrame.sight;
     })
   };
 
@@ -263,10 +276,16 @@
     for (var i = 0; i < this.grid.length; i++) {
       for (var j = 0; j < this.grid[i].length; j++) {
         tile = window.game.add.sprite(j * 64, i * 64, 'tiles');
-        tile.frame = this.overlay[i][j].sight.default;
+        tile.frame = this.overlay[i][j].overlayFrame.default;
         this.overlay[i][j].tile = tile;
       }
     }
   };
+
+  Board.prototype.showOverlaySelected = function (unit, n) {
+    var coor = unit.currentGridCoor();
+    this.overlay[coor.i][coor.j].tile.frame = this.overlay[coor.i][coor.j].overlayFrame["selected" + n];
+  };
+
 
 })();
