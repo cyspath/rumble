@@ -27,11 +27,26 @@
     return model;
   };
 
+  // HP BAR
   UnitClass.prototype.addHpBAR = function() {
-    var style = { font: "10px Arial", fill: "#ffffff", align: "center", backgroundColor: "#ff8888" };
-    var text = game.add.text(0, 0, this.hp, style);
-    this.model.addChild(text);
-    return text;
+    var color = this.color == "Red" ? '#fa3c3a' : '#00e600';
+    var width = 15 + Math.floor(this.hp * 0.2);
+    console.log(width);
+    var barConfig = {
+      width: width,
+      bar:   { color: color },
+    };
+    return new HealthBar(window.game, barConfig, this.model);
+  };
+
+  UnitClass.prototype.updateHpBar = function() {
+    this.hpBar.setPercent(this.hp/this.maxHp * 100);
+    if (this.hp <= 0) {
+      var that = this;
+      setTimeout(function() {
+        that.hpBar.kill();
+      }, 500)
+    }
   };
 
   UnitClass.prototype.boardAddUnit = function() {
@@ -128,10 +143,6 @@
     }, stepTime);
   };
 
-  UnitClass.prototype.updateHpBar = function() {
-    this.hpBar.setText(this.hp);
-  };
-
   UnitClass.prototype.attack = function(unit) {
     var attacker = this;
     var defender = unit;
@@ -150,9 +161,12 @@
 
   UnitClass.prototype.destroy = function() {
     var coor = this.currentGridCoor();
+    var that = this;
     window.board.grid[coor.i][coor.j].unit = undefined; // remove from board
-    this.model.kill(); // destroy phaser sprite
-    window.battle.deleteUnit(this); // remove from team from battle
+    setTimeout(function() {
+      that.model.kill(); // destroy phaser sprite
+      window.battle.deleteUnit(that); // remove from team from battle
+    }, 500)
   };
 
   UnitClass.prototype.currentDamage = function() {
