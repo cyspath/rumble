@@ -31,7 +31,6 @@
   UnitClass.prototype.addHpBAR = function() {
     var color = this.color == "Red" ? '#fa3c3a' : '#00e600';
     var width = 15 + Math.floor(this.hp * 0.2);
-    console.log(width);
     var barConfig = {
       width: width,
       bar:   { color: color },
@@ -162,6 +161,7 @@
   UnitClass.prototype.destroy = function() {
     var coor = this.currentGridCoor();
     var that = this;
+    window.board.explode(this.model.position.x, this.model.position.y);
     window.board.grid[coor.i][coor.j].unit = undefined; // remove from board
     setTimeout(function() {
       that.model.kill(); // destroy phaser sprite

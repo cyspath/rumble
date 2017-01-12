@@ -228,6 +228,25 @@
     // }
   };
 
+  Board.prototype.addExplosions = function() {
+    this.explosions = [game.add.sprite(0, 0, "explosion1"), game.add.sprite(0, 0, "explosion2")]
+    this.explosions.forEach(function(e) {
+      e.visible = false;
+      var anim = e.animations.add('explode', [ 23, 24,  23, 24, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24], 40, false);
+      anim.onComplete.add(function() {
+        e.visible = false;
+      }, e);
+    })
+  };
+
+  Board.prototype.explode = function (x,y) {
+    var explosion = this.explosions[window.utils.randomBoundBy(0,2)];
+    explosion.x = x;
+    explosion.y = y;
+    explosion.visible = true;
+    explosion.play('explode');
+  };
+
   Board.prototype.resetGridBackground = function () {
     for (var i = 0; i < this.grid.length; i++) {
       for (var j = 0; j < this.grid[i].length; j++) {

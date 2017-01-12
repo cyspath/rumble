@@ -50,6 +50,8 @@ function create() {
 
   game.physics.arcade.enable(team1.concat(team2).map(function(unit) { return unit.model; }), Phaser.Physics.ARCADE);
 
+  board.addExplosions();
+  
   // add control panel
   battle.addControlPanel();
 

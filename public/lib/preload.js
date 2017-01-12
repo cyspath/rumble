@@ -19,6 +19,10 @@ function preload() {
     game.load.spritesheet('button_refresh', 'images/button_refresh.png', 55, 47);
 
     game.load.image('panelBackground', 'images/panelBackground.png');
+
+    game.load.spritesheet('explosion1', 'images/explosion1.png', 64, 64);
+    game.load.spritesheet('explosion2', 'images/explosion2.png', 64, 64);
+
     // game.load.image('sky', 'assets/sky.png');
 
 }
