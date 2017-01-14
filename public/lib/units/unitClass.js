@@ -13,6 +13,7 @@
     this.model = this.addModel();
     this.hpBar = this.addHpBAR();
     this.boardAddUnit();
+    this.name = window.utils.nameUnit(this.type, this.color);
   };
 
   UnitClass.prototype.addModel = function() {

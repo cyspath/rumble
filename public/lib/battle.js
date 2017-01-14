@@ -5,12 +5,14 @@
 
   var Battle = window.Rumble.Battle = function () {
     this.turn = 1;
-    this.team1 = [];
-    this.team2 = [];
-    this.colors = ["Red", "Yellow"]; // staring, turn 1, team's color is 'Blue'
+    // this.team1 = {};
+    // this.team2 = {};
+    // this.colors = ["Red", "Yellow"]; // staring, turn 1, team's color is 'Blue'
   };
 
   Battle.prototype.start = function(team1, team2) {
+    this.turn = 1;
+    this.colors = [team2.color, team1.color]
     this.team1 = team1;
     this.team2 = team2;
     this.resetTeamTurns(this.team1);
@@ -18,14 +20,14 @@
   };
 
   Battle.prototype.resetTeamTurns = function(team) {
-    for (var i = 0; i < team.length; i++) {
-      team[i].startTurn();
+    for (var i = 0; i < team.units.length; i++) {
+      team.units[i].startTurn();
     }
   };
 
   Battle.prototype.endTeamTurns = function(team) {
-    for (var i = 0; i < team.length; i++) {
-      team[i].endTurn();
+    for (var i = 0; i < team.units.length; i++) {
+      team.units[i].endTurn();
     }
   };
 
@@ -45,12 +47,15 @@
     console.log("Turn " + this.turn);
     this.resetTeamTurns(this.currentTeam());
     window.board.resetGridBackground(); // reset background
+    if (this.turn % 2 != 0) {
+      window.AI.play();
+    }
   };
 
   Battle.prototype.winCondition = function() {
-    if (this.team1.length === 0) {
+    if (this.team1.units.length === 0) {
       return 2;
-    } else if (this.team2.length === 0) {
+    } else if (this.team2.units.length === 0) {
       return 1;
     } else {
       return false;
@@ -86,8 +91,8 @@
   };
 
   Battle.prototype.teamTurnOver = function(team) {
-    for (var i = 0; i < team.length; i++) {
-      if (!team[i].isTurnOver()) {
+    for (var i = 0; i < team.units.length; i++) {
+      if (!team.units[i].isTurnOver()) {
         return false;
       }
     }
@@ -103,9 +108,9 @@
 
   Battle.prototype.deleteUnit = function(unit) {
     var team = this.unitTeam(unit);
-    var idx = team.indexOf(unit);
+    var idx = team.units.indexOf(unit);
     if (idx > -1) {
-      team.splice(idx, 1);
+      team.units.splice(idx, 1);
     }
   };
 
