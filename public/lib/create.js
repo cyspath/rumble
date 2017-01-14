@@ -24,19 +24,21 @@ function create() {
 
   var team1 = [
     new window.Rumble.LightSoldier({x: 0 * 64, y: 7 * 64, color: "Yellow"}),
-    new window.Rumble.LightSoldier({x: 0 * 64, y: 8 * 64, color: "Yellow"}),
     new window.Rumble.LightSoldier({x: 1 * 64, y: 8 * 64, color: "Yellow"}),
     new window.Rumble.BazookaSoldier({x: 1 * 64, y: 6 * 64, color: "Yellow"}),
     new window.Rumble.BazookaSoldier({x: 2 * 64, y: 8 * 64, color: "Yellow"}),
+    new window.Rumble.LightTank({x: 2 * 64, y: 6 * 64, color: "Yellow"}),
+    new window.Rumble.LightTank({x: 2 * 64, y: 7 * 64, color: "Yellow"}),
     new window.Rumble.HeavyTank({ x: 1 * 64, y: 7 * 64, color: "Yellow" }),
-    new window.Rumble.RocketVehicle({ x: 1 * 64, y: 9 * 64, color: "Yellow" }),
-    new window.Rumble.RocketVehicle({ x: 5 * 64, y: 5 * 64, color: "Yellow" }) // debug
+    new window.Rumble.RocketVehicle({ x: 0 * 64, y: 8 * 64, color: "Yellow" }),
+    // new window.Rumble.RocketVehicle({ x: 5 * 64, y: 5 * 64, color: "Yellow" }) // debug
   ];
   var team2 = [
-    new window.Rumble.HeavyTank({ x: 2 * 64, y: 6 * 64, color: "Red" }), // debug use
+    // new window.Rumble.HeavyTank({ x: 3 * 64, y: 6 * 64, color: "Red" }), // debug use
     new window.Rumble.LightSoldier({ x: 7 * 64, y: 1 * 64, color: "Red"}),
     new window.Rumble.LightSoldier({ x: 8 * 64, y: 2 * 64, color: "Red"}),
     new window.Rumble.BazookaSoldier({ x: 8 * 64, y: 3 * 64, color: "Red"}),
+    new window.Rumble.LightTank({ x: 4 * 64, y: 2 * 64, color: "Red"}),
     new window.Rumble.HeavyTank({ x: 8 * 64, y: 1 * 64, color: "Red" }),
     new window.Rumble.HeavyTank({ x: 9 * 64, y: 3 * 64, color: "Red" }),
     new window.Rumble.RocketVehicle({ x: 9 * 64, y: 1 * 64, color: "Red" })

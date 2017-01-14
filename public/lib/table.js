@@ -6,7 +6,7 @@
 
   Rumble.DamageVsArmor = {
     "light-light": 1, "light-medium": 1, "light-heavy": 0.5,
-    "medim-light": 1, "medim-medium": 1, "medim-heavy": 1,
+    "medium-light": 1, "medium-medium": 1, "medium-heavy": 1,
     "heavy-light": 0.5, "heavy-medium": 1, "heavy-heavy": 1.5
   };
 

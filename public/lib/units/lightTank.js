@@ -3,13 +3,13 @@
     window.Rumble = {};
   }
 
-  var HeavyTank = window.Rumble.HeavyTank = function (args) {
-    this.type = "heavyTank";
-    this.maxHp = 150;
-    this.maxDamage = 60;
-    this.movementRange = 5;
-    this.armorType = "heavy";
-    this.damageType = "heavy";
+  var LightTank = window.Rumble.LightTank = function (args) {
+    this.type = "lightTank";
+    this.maxHp = 70;
+    this.maxDamage = 35;
+    this.movementRange = 6;
+    this.armorType = "medium";
+    this.damageType = "medium";
     this.hp = this.maxHp;
     this.movementType = "track";
 
@@ -20,7 +20,7 @@
     }
     window.Rumble.UnitClass.call(this, newArgs);
   };
-  window.utils.inherits(HeavyTank, window.Rumble.UnitClass);
+  window.utils.inherits(LightTank, window.Rumble.UnitClass);
 
 
 })();

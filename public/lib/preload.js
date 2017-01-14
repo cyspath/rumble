@@ -8,6 +8,10 @@ function preload() {
     game.load.spritesheet('bazookaSoldierRed', 'images/bazookaSoldierRed.png', 64, 64);
     game.load.spritesheet('bazookaSoldierYellow', 'images/bazookaSoldierYellow.png', 64, 64);
 
+    game.load.spritesheet('lightTankYellow', 'images/lightTankYellow.png', 64, 64)
+    game.load.spritesheet('lightTankRed', 'images/lightTankRed.png', 64, 64)
+    game.load.spritesheet('lightTankGreen', 'images/lightTankGreen.png', 64, 64)
+
     game.load.spritesheet('heavyTankRed', 'images/heavyTankRed.png', 64, 64)
     game.load.spritesheet('heavyTankYellow', 'images/heavyTankYellow.png', 64, 64)
     game.load.spritesheet('heavyTankBlue', 'images/heavyTankBlue.png', 64, 64)
