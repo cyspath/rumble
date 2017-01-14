@@ -162,8 +162,8 @@
     this.grid[coor.i][coor.j].unit = undefined;
   };
 
-  Board.prototype.hasUnit = function(i, j) {
-    return this.grid[i][j].unit !== undefined;
+  Board.prototype.hasEnemyUnit = function(unit, i, j) {
+    return this.grid[i][j].unit !== undefined && this.grid[i][j].unit.color != unit.color;
   };
 
   ////////////////////////// SET UP THE GRID //////////////////////////
@@ -204,13 +204,6 @@
     a.forEach(function(coor) {
         that.grid[coor[0]][coor[1]].land = [land.grasslandForest1, land.grasslandForest2, land.grasslandForest3, land.grasslandBushes1, land.grasslandBushes2][utils.randomBoundBy(0, 5)];
     })
-    // for (var i = 0; i < this.grid.length; i++) {
-    //   for (var j = 0; j < this.grid[i].length; j++) {
-    //     if (utils.percentChance(10)) {
-    //       this.grid[i][j].land = [land.grasslandForest1, land.grasslandForest2][utils.randomBoundBy(0, 2)];
-    //     }
-    //   }
-    // }
   };
 
   Board.prototype.addRocks = function() {
@@ -219,13 +212,6 @@
     a.forEach(function(coor) {
         that.grid[coor[0]][coor[1]].land = land.grasslandRock;
     })
-    // for (var i = 0; i < this.grid.length; i++) {
-    //   for (var j = 0; j < this.grid[i].length; j++) {
-    //     if (utils.percentChance(5)) {
-    //       this.grid[i][j].land = land.grasslandRock;
-    //     }
-    //   }
-    // }
   };
 
   Board.prototype.addExplosions = function() {
@@ -296,6 +282,8 @@
       for (var j = 0; j < this.grid[i].length; j++) {
         tile = window.game.add.sprite(j * 64, i * 64, 'tiles');
         tile.frame = this.overlay[i][j].overlayFrame.default;
+        tile.alpha = 0;
+        window.game.add.tween(tile).to( { alpha: 1 }, 800, Phaser.Easing.Linear.None, true, 0, 1000, true);
         this.overlay[i][j].tile = tile;
       }
     }

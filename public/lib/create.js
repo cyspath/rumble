@@ -1,6 +1,3 @@
-// var player;
-// var platforms;
-
 var board = new window.Rumble.Board;
 var battle = new window.Rumble.Battle;
 var grid = board.grid;
@@ -11,18 +8,12 @@ var tank;
 var tile;
 
 var tween;
-var x = 100, y = 100, t = 4
 
 
 window.Rumble.SelectedUnit;
 window.Rumble.PathFinder;
 window.Rumble.AtkRangeCoors;
 
-// setInterval(function () {
-//   var su = window.Rumble.SelectedUnit;
-//   var txt = su ? (su.type + su.color) : su;
-//   console.log(txt);
-// }, 500)
 
 function create() {
   // create background
@@ -38,7 +29,8 @@ function create() {
     new window.Rumble.BazookaSoldier({x: 1 * 64, y: 6 * 64, color: "Yellow"}),
     new window.Rumble.BazookaSoldier({x: 2 * 64, y: 8 * 64, color: "Yellow"}),
     new window.Rumble.HeavyTank({ x: 1 * 64, y: 7 * 64, color: "Yellow" }),
-    new window.Rumble.RocketVehicle({ x: 1 * 64, y: 9 * 64, color: "Yellow" })
+    new window.Rumble.RocketVehicle({ x: 1 * 64, y: 9 * 64, color: "Yellow" }),
+    new window.Rumble.RocketVehicle({ x: 5 * 64, y: 5 * 64, color: "Yellow" }) // debug
   ];
   var team2 = [
     new window.Rumble.HeavyTank({ x: 2 * 64, y: 6 * 64, color: "Red" }), // debug use

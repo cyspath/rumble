@@ -50,8 +50,8 @@
     grasslandForest3:  { default: 14, pathFinderShade: 15, type: "forest" },
     grasslandBushes1:  { default: 2, pathFinderShade: 3, type: "bushes" },
     grasslandBushes2:  { default: 4, pathFinderShade: 5, type: "bushes" },
-    grasslandRock:     { default: 22, pathFinderShade: 23, type: "rock" },
-    overlayFrame:      { default: 30, sight: 31, selected1: 40, selected2: 41 }
+    grasslandRock:     { default: 28, pathFinderShade: 29, type: "rock" },
+    overlayFrame:      { default: 30, sight: 32, selected1: 40, selected2: 41 }
   };
 
 

@@ -30,7 +30,7 @@
       }
 
       var unitAtInitialPos = utils.equalCoors(ci, cj, startPos.i, startPos.j);
-      if (window.board.hasUnit(ci, cj) && !unitAtInitialPos) {
+      if (window.board.hasEnemyUnit(unit, ci, cj) && !unitAtInitialPos) {
         return; // return if at none-start position and has another blocking unit
       }
 
