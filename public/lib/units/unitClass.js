@@ -59,7 +59,7 @@
   UnitClass.prototype.isTurnOver = function() {
     if (this.attacked) {
       return true;
-    } else if (this.moved && !this.isEnemyInRange()) {
+    } else if (this.moved && !this.allEnemiesInRange()) {
       return true;
     } else {
       return false;
@@ -78,7 +78,18 @@
     this.model.tint = 0xACACAC;
   };
 
-  UnitClass.prototype.isEnemyInRange = function() {
+  UnitClass.prototype.isEnemyInRange = function(enemy) {
+    var coors = this.atkRangeCoors();
+    var that = this;
+    for (var i = 0; i < coors.length; i++) {
+      if (window.board.grid[coors[i][0]][coors[i][1]].unit == enemy) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  UnitClass.prototype.allEnemiesInRange = function() {
     var coors = [];
     var that = this;
     this.atkRangeCoors().forEach(function(coor) {
@@ -91,7 +102,7 @@
   };
 
   UnitClass.prototype.enemiesInRange = function() { // array of enemies, if none - empty array
-    var coors = this.isEnemyInRange();
+    var coors = this.allEnemiesInRange();
     if (coors) {
       return coors.map(function(coor) {
         return window.board.grid[coor[0]][coor[1]].unit;
@@ -149,7 +160,7 @@
 
     if (defender.hp === 0) {
       defender.destroy(); // defender dies
-    } else {
+    } else if (defender.isEnemyInRange(attacker)) {
       // defender strikes back
       battle.resolveDamage(defender, attacker);
       if (attacker.hp === 0) {
