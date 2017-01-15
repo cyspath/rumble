@@ -13,7 +13,8 @@
     this.model = this.addModel();
     this.hpBar = this.addHpBAR();
     this.boardAddUnit();
-    this.name = window.utils.nameUnit(this.type, this.color);
+    this.name = window.utils.nameUnit(this.type);
+    this.nameColor = this.name + "(" + this.color + ")";
   };
 
   UnitClass.prototype.addModel = function() {
@@ -123,8 +124,8 @@
     })
   };
 
-  UnitClass.prototype.currentGridCoor = function() {
-    return { "i": this.model.position.y/64, "j": this.model.position.x/64 };
+  UnitClass.prototype.movementCoors = function() {
+    return window.utils.movementCoors(window.board.grid, this);
   };
 
   UnitClass.prototype.animateFrames = function(stepTime, steps, pathXArr) {
@@ -186,8 +187,22 @@
     return Math.max(Math.floor(this.maxDamage * percentHp), 1);
   };
 
-  UnitClass.prototype.currentCoor = function() {
-    return window.board.convertXYToCoor(this.model.position.x, this.model.position.y);
+  // ########### COORDINATES ###############
+  UnitClass.prototype.currentGridCoor = function() {
+    return { "i": this.model.position.y/64, "j": this.model.position.x/64 };
   };
 
+  UnitClass.prototype.currentCoor = function() {
+    return [this.model.position.y/64, this.model.position.x/64];
+  };
+
+  UnitClass.prototype.bestVsArmorTypes = function() {
+    if (this.damageType == "light") {
+      return ["light", "medium"];
+    } else if (this.damageType == "medium") {
+      return ["light", "medium", "heavy"];
+    } else if (this.damageType == "heavy") {
+      return ["heavy"];
+    }
+  };
 })();

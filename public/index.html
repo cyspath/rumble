@@ -1,46 +1,35 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Rumble</title>
-  <script type="text/javascript" src="jquery/dist/jquery.min.js"></script>
-  <script type="text/javascript" src="js/phaser.min.js"></script>
-  <script type="text/javascript" src="js/healthbar.js"></script>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Rumble</title>
+    <script type="text/javascript" src="jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="js/phaser.min.js"></script>
+    <script type="text/javascript" src="js/healthbar.js"></script>
 
-  <script type="text/javascript" src="lib/table.js"></script>
-  <script type="text/javascript" src="lib/utils.js"></script>
+    <script type="text/javascript" src="lib/table.js"></script>
+    <script type="text/javascript" src="lib/utils.js"></script>
 
-  <script type="text/javascript" src="lib/units/unitClass.js"></script>
-  <script type="text/javascript" src="lib/units/lightSoldier.js"></script>
-  <script type="text/javascript" src="lib/units/bazookaSoldier.js"></script>
-  <script type="text/javascript" src="lib/units/lightTank.js"></script>
-  <script type="text/javascript" src="lib/units/heavyTank.js"></script>
-  <script type="text/javascript" src="lib/units/rocketVehicle.js"></script>
+    <script type="text/javascript" src="lib/units/unitClass.js"></script>
+    <script type="text/javascript" src="lib/units/lightSoldier.js"></script>
+    <script type="text/javascript" src="lib/units/bazookaSoldier.js"></script>
+    <script type="text/javascript" src="lib/units/lightTank.js"></script>
+    <script type="text/javascript" src="lib/units/heavyTank.js"></script>
+    <script type="text/javascript" src="lib/units/rocketVehicle.js"></script>
 
-  <!-- <script type="text/javascript" src="lib/teams.js"></script> -->
-  <script type="text/javascript" src="lib/battle.js"></script>
-  <script type="text/javascript" src="lib/board.js"></script>
-  <script type="text/javascript" src="lib/ai.js"></script>
+    <script type="text/javascript" src="lib/battle.js"></script>
+    <script type="text/javascript" src="lib/board.js"></script>
+    <script type="text/javascript" src="lib/ai.js"></script>
+  </head>
 
+  <body>
+    <script type="text/javascript" src="lib/phaser/preload.js"></script>
+    <script type="text/javascript" src="lib/phaser/create.js"></script>
+    <script type="text/javascript" src="lib/phaser/update.js"></script>
 
-</head>
-<body>
-
-<script type="text/javascript">
-  // var board = new window.Rumble.Board;
-</script>
-
-<script type="text/javascript" src="lib/phaser/preload.js"></script>
-<script type="text/javascript" src="lib/phaser/create.js"></script>
-<script type="text/javascript" src="lib/phaser/update.js"></script>
-
-<script type="text/javascript">
-  var animations = false;
-  game = new Phaser.Game(640, 762, Phaser.AUTO, '', { preload: preload, create: create, update: update });
-</script>
-
-<!-- <input type="button" id="refresh" style="display:block; position:fixed" value="Restart" onClick="window.location.reload()"> -->
-
-
-</body>
+    <script type="text/javascript">
+      var animations = false;
+      game = new Phaser.Game(640, 762, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+    </script>
+  </body>
 </html>

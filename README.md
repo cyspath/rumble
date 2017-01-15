@@ -20,6 +20,11 @@ There are four stages, each stage increases in difficulty.
 * No game engine was used. Explosion uses custom animation by snapshotting various frames of a sprite sheet in the Explosion class.
 * Images were edited on Gimp2 and stored in Cloudinary.
 
+## AI logic
+* AI will take turns for all his units, in random order.
+* To attack: for each unit AI will attempt to attack first, if no target can be attack, AI will move its unit, and try to attack again.
+* To move: for each unit, AI will rank its enemy's units by their distance to each of its own units, and *move towards the closest enemies with favorable damage and armor outcome*.
+
 ### Additional Details
 
 * Generally, a unit can attack after moving, but cannot move after attacking every turn.

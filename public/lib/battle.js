@@ -47,7 +47,7 @@
     console.log("Turn " + this.turn);
     this.resetTeamTurns(this.currentTeam());
     window.board.resetGridBackground(); // reset background
-    if (this.turn % 2 != 0) {
+    if (this.turn % 2 == 0) {
       window.AI.play();
     }
   };

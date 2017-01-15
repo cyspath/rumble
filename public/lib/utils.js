@@ -22,7 +22,7 @@
 
   utils.movementCoors = function(grid, unit) {
     var store = {};
-    var startPos = unit.currentCoor();
+    var startPos = unit.currentGridCoor();
 
     function recurse(ci, cj, m, steps, path) {
       if (!m[ci] || !m[ci][cj] || steps > unit.movementRange) {
@@ -55,11 +55,27 @@
 
     recurse(startPos.i, startPos.j, grid, 0, []);
     return store;
-  }
+  };
+
+  utils.distanceBetween = function(coor1, coor2) {
+    return Math.abs(coor1[0] - coor2[0]) + Math.abs(coor1[0] - coor2[0])
+  };
+
+  utils.sortCompareDistance = function(a, b) {
+     if (a.distance < b.distance)
+       return -1;
+     if (a.distance > b.distance)
+       return 1;
+     return 0;
+   };
 
   utils.equalCoors = function(ai, aj, bi, bj) {
     return ai === bi && aj === bj;
   };
+
+  utils.strCoorToArrCoor = function(strCoor) {
+    return strCoor.split(",").map(function(str) { return Number(str) });
+  }
 
   utils.splitPathArray = function(arr) {
     var result = { "x": [], "y": [] };
@@ -80,8 +96,8 @@
     }
   };
 
-  utils.nameUnit = function(type, color) {
-    return type.slice(0,1).toUpperCase() + type.slice(1) + " (" + color + ")"
+  utils.nameUnit = function(type) {
+    return type.slice(0,1).toUpperCase() + type.slice(1);
   };
 
   utils.shuffleArray = function(array) {

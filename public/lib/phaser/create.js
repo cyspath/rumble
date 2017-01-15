@@ -63,7 +63,7 @@ function create() {
   board.createForeground();
 
   // start battle
-  battle.start(redTeam, yellowTeam);
+  battle.start(yellowTeam, redTeam);
 
   AI = new window.Rumble.AI(redTeam, yellowTeam);
 
