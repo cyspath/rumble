@@ -23,7 +23,7 @@ There are four stages, each stage increases in difficulty.
 ## AI logic
 * AI will take turns for all his units, in random order.
 * To attack: for each unit AI will attempt to attack first, if no target can be attack, AI will move its unit, and try to attack again.
-* To move: for each unit, AI will rank its enemy's units by their distance to each of its own units, and *move towards the closest enemies with favorable damage and armor outcome*.
+* To move: for each unit, AI will rank its enemy's units by their distance to each of its own units using a _customized A* pathfinding algorithm_, and _move towards one of the closest enemies with favorable damage and armor exchange outcome_.
 
 ### Additional Details
 

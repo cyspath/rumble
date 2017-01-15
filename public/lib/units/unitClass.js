@@ -198,7 +198,7 @@
 
   UnitClass.prototype.bestVsArmorTypes = function() {
     if (this.damageType == "light") {
-      return ["light", "medium"];
+      return ["light"];
     } else if (this.damageType == "medium") {
       return ["light", "medium", "heavy"];
     } else if (this.damageType == "heavy") {

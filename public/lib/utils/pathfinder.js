@@ -33,7 +33,9 @@
     function adjacentCoors(coor) {
       var coors = [[coor[0] - 1, coor[1]], [coor[0] + 1, coor[1]], [coor[0], coor[1] - 1], [coor[0], coor[1] + 1]];
       return coors.filter(function (c) {
-        if (grid[c[0]] && grid[c[0]][c[1]] && unit.canMoveThroughCoor(grid[c[0]][c[1]])) { // walkable condition check here
+        if (String(c) == String(targetCoor)) {
+          return c
+        } else if (grid[c[0]] && grid[c[0]][c[1]] && unit.canMoveThroughCoor([c[0],c[1]])) { // walkable condition check here
           return c;
         }
       })
@@ -44,6 +46,9 @@
     openList[startNode.key] = startNode;
 
     function recurse(currentNode) {
+      if (!currentNode) {
+        return;
+      }
       // drop current node from open and add to close list
       openList[currentNode.key] = undefined;
       closeList[currentNode.key] = currentNode;
@@ -64,7 +69,8 @@
             newNode.parent = currentNode;
           }
         } else {
-          newNode = new Node(coor, hValue(coor, targetCoor), currentNode.g + 1, currentNode);
+          var newG = window.board.occupiedOrReduceMovementAt(coor, unit) ? currentNode.g + 2 : currentNode.g + 1;
+          newNode = new Node(coor, hValue(coor, targetCoor), newG, currentNode);
           openList[newNode.key] = newNode;
           if (newNode.key == String(targetCoor)) {
             return newNode;
@@ -75,6 +81,10 @@
     }
 
     var node = recurse(startNode);
+    if (!node) {
+      // console.log(unit.nameColor + " does not have a path to " + targetCoor);
+      return;
+    }
 
     // back trace the coordinates
     var pathList = [];

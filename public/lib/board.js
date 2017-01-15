@@ -119,7 +119,7 @@
       this.contextFunction.showOverlaySelected(this.unit, "1");
       // and can still attack
     }
-    // 
+    //
     // this.unit.endTurn()
     // AI.takeUnitsTurns();
 
@@ -167,6 +167,19 @@
 
   Board.prototype.hasEnemyUnit = function(unit, i, j) {
     return this.grid[i][j].unit !== undefined && this.grid[i][j].unit.color != unit.color;
+  };
+
+  Board.prototype.occupiedAt = function(coor) {
+    return this.grid[coor[0]][coor[1]].unit !== undefined;
+  };
+
+  Board.prototype.occupiedOrReduceMovementAt = function(coor, unit) {
+    if (this.occupiedAt(coor)) {
+      return true;
+    } else if (window.Rumble.TerrainMovementReduction[unit.movementType + "-" + window.board.grid[coor[0]][coor[1]].land.type].slice(0, 6) == "REDUCE") {
+      return true;
+    }
+    return false;
   };
 
   ////////////////////////// SET UP THE GRID //////////////////////////
@@ -292,10 +305,14 @@
     }
   };
 
+  // ########## SHOW OVERLAY SELECTED ##################
   Board.prototype.showOverlaySelected = function (unit, n) {
     var coor = unit.currentGridCoor();
     this.overlay[coor.i][coor.j].tile.frame = this.overlay[coor.i][coor.j].overlayFrame["selected" + n];
   };
 
+  Board.prototype.showOverlaySelectedAt = function (coor, n) {
+    this.overlay[coor[0]][coor[1]].tile.frame = this.overlay[coor[0]][coor[1]].overlayFrame["selected" + n];
+  };
 
 })();

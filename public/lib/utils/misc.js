@@ -62,9 +62,9 @@
   };
 
   utils.sortCompareDistance = function(a, b) {
-     if (a.distance < b.distance)
+     if (a.path.length < b.path.length)
        return -1;
-     if (a.distance > b.distance)
+     if (a.path.length > b.path.length)
        return 1;
      return 0;
    };
