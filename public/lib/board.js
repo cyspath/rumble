@@ -85,15 +85,14 @@
 
     var i = this.context.position.y / 64, j = this.context.position.x / 64;
     if (window.Rumble.PathFinder[[i, j]]) {
-      this.contextFunction.moveUnitTo(this.context, i, j);
+      this.contextFunction.moveUnitTo(window.Rumble.SelectedUnit, i, j);
     }
   };
 
-  Board.prototype.moveUnitTo = function(tile, i, j) {
+  Board.prototype.moveUnitTo = function(unit, i, j) {
     window.animations = true;
-    var unit = window.Rumble.SelectedUnit
     this.removeUnit(unit);
-    var pathObj = window.Rumble.PathFinder[[i, j]];
+    var pathObj = unit.movementCoors()[[i, j]];
     var moves = pathObj.path.length;
     var moveTime = 300;
     var tweenPath = window.utils.splitPathArray(pathObj.path);
@@ -120,6 +119,10 @@
       this.contextFunction.showOverlaySelected(this.unit, "1");
       // and can still attack
     }
+    // 
+    // this.unit.endTurn()
+    // AI.takeUnitsTurns();
+
   };
 
   Board.prototype.endUnitTurn = function(unit) {

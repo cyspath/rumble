@@ -205,4 +205,9 @@
       return ["heavy"];
     }
   };
+
+  UnitClass.prototype.canMoveThroughCoor = function (coor) {
+    var tile = window.board.grid[coor[0]][coor[1]];
+    return (window.Rumble.TerrainMovementReduction[this.movementType + "-" + tile.land.type] != undefined) && (!tile.unit || tile.unit.color == this.color)
+  };
 })();
