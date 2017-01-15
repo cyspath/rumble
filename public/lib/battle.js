@@ -11,6 +11,7 @@
   };
 
   Battle.prototype.start = function(team1, team2) {
+    this.allUnits = team1.units.concat(team2.units);
     this.turn = 1;
     this.colors = [team2.color, team1.color]
     this.team1 = team1;
@@ -112,6 +113,12 @@
     if (idx > -1) {
       team.units.splice(idx, 1);
     }
+  };
+
+  Battle.prototype.deselectAllUnits = function () {
+    this.allUnits.forEach(function (u) {
+      u.deselect();
+    })
   };
 
   // CONTROL PANEL

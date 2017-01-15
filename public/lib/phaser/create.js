@@ -45,7 +45,7 @@ function create() {
       new window.Rumble.LightSoldier({ x: 7 * 64, y: 1 * 64, color: "Red"}),
       new window.Rumble.LightSoldier({ x: 8 * 64, y: 2 * 64, color: "Red"}),
       new window.Rumble.BazookaSoldier({ x: 8 * 64, y: 3 * 64, color: "Red"}),
-      new window.Rumble.LightTank({ x: 4 * 64, y: 2 * 64, color: "Red"}),
+      new window.Rumble.LightTank({ x: 5 * 64, y: 5 * 64, color: "Red"}),
       new window.Rumble.HeavyTank({ x: 8 * 64, y: 1 * 64, color: "Red" }),
       new window.Rumble.HeavyTank({ x: 9 * 64, y: 3 * 64, color: "Red" }),
       new window.Rumble.RocketVehicle({ x: 9 * 64, y: 1 * 64, color: "Red" })

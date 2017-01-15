@@ -42,20 +42,21 @@
   Board.prototype.selectUnit = function(unit) {
     window.Rumble.SelectedUnit = unit;
     this.resetGridBackground();
+    window.battle.deselectAllUnits();
 
     // move or attack
     if (!unit.moved || !window.battle.isCurrentTurnUnit(unit)) {
       this.showPathFinder(unit);
-      this.showOverlaySelected(unit, "1");
+      unit.select(1);
     }
 
     if (!unit.attacked || !window.battle.isCurrentTurnUnit(unit)) {
       this.showRangeFinder(unit);
-      this.showOverlaySelected(unit, "1");
+      unit.select(1);
     }
 
     if (unit.isTurnOver()) {
-      this.showOverlaySelected(unit, "2");
+      unit.select(2);
     }
 
   };
@@ -78,7 +79,7 @@
 
   Board.prototype.handleTileClick = function() {
     this.contextFunction.resetGridBackground();
-
+    
     if (window.animations || window.Rumble.SelectedUnit === undefined || (window.Rumble.SelectedUnit && window.Rumble.SelectedUnit.moved)) {
       return this.contextFunction.resetUnitPathRange();;
     };
@@ -86,6 +87,8 @@
     var i = this.context.position.y / 64, j = this.context.position.x / 64;
     if (window.Rumble.PathFinder[[i, j]]) {
       this.contextFunction.moveUnitTo(window.Rumble.SelectedUnit, i, j);
+    } else {
+      window.Rumble.SelectedUnit.deselect();
     }
   };
 
@@ -116,7 +119,7 @@
       this.contextFunction.endUnitTurn(this.unit);
     } else if (!this.unit.attacked) {
       this.contextFunction.showRangeFinder(this.unit);
-      this.contextFunction.showOverlaySelected(this.unit, "1");
+      this.unit.select(1);
       // and can still attack
     }
     //
@@ -134,7 +137,10 @@
   };
 
   Board.prototype.resetSelectedUnit = function() {
-    window.Rumble.SelectedUnit = undefined;
+    if (window.Rumble.SelectedUnit) {
+      window.Rumble.SelectedUnit.deselect();
+      window.Rumble.SelectedUnit = undefined;
+    }
   };
 
   Board.prototype.resetPathFinder = function() {
@@ -254,7 +260,6 @@
       for (var j = 0; j < this.grid[i].length; j++) {
         this.grid[i][j].tile.tint = 0xFFFFFF;
         this.grid[i][j].tile.frame = this.grid[i][j].land.default;
-        // this.overlay[i][j].tile.tint = 0xFFFFFF;
         this.overlay[i][j].tile.frame = this.overlay[i][j].overlayFrame.default;
       }
     }
@@ -305,14 +310,8 @@
     }
   };
 
-  // ########## SHOW OVERLAY SELECTED ##################
-  Board.prototype.showOverlaySelected = function (unit, n) {
-    var coor = unit.currentGridCoor();
-    this.overlay[coor.i][coor.j].tile.frame = this.overlay[coor.i][coor.j].overlayFrame["selected" + n];
-  };
-
   Board.prototype.showOverlaySelectedAt = function (coor, n) {
-    this.overlay[coor[0]][coor[1]].tile.frame = this.overlay[coor[0]][coor[1]].overlayFrame["selected" + n];
+    this.grid[coor[0]][coor[1]].unit.select(n);
   };
 
 })();

@@ -12,6 +12,7 @@
     this.attacked = true;
     this.model = this.addModel();
     this.hpBar = this.addHpBAR();
+    this.selectionSquare = this.addSelectionSquare();
     this.boardAddUnit();
     this.name = window.utils.nameUnit(this.type);
     this.nameColor = this.name + "(" + this.color + ")";
@@ -50,6 +51,24 @@
     }
   };
 
+  // selection square
+  UnitClass.prototype.addSelectionSquare = function () {
+    var selectionSquare = this.model.addChild(window.game.add.sprite(0, 0, 'tiles'))
+    selectionSquare.frame = 30;
+    selectionSquare.alpha = 0;
+    window.game.add.tween(selectionSquare).to( { alpha: 1 }, 800, Phaser.Easing.Linear.None, true, 0, 1000, true);
+    return selectionSquare;
+  };
+
+  UnitClass.prototype.select = function(n) {
+    this.selectionSquare.frame = String(n) == 1 ? 40 : 41;
+  };
+
+  UnitClass.prototype.deselect = function() {
+    this.selectionSquare.frame = 30;
+  };
+
+
   UnitClass.prototype.boardAddUnit = function() {
     window.board.addUnit(this);
   };
@@ -78,6 +97,7 @@
     this.moved = true;
     this.attacked = true;
     this.model.tint = 0xACACAC;
+    this.deselect();
   };
 
   UnitClass.prototype.isEnemyInRange = function(enemy) {
