@@ -79,7 +79,7 @@
 
   Board.prototype.handleTileClick = function() {
     this.contextFunction.resetGridBackground();
-    
+
     if (window.animations || window.Rumble.SelectedUnit === undefined || (window.Rumble.SelectedUnit && window.Rumble.SelectedUnit.moved)) {
       return this.contextFunction.resetUnitPathRange();;
     };
@@ -122,10 +122,6 @@
       this.unit.select(1);
       // and can still attack
     }
-    //
-    // this.unit.endTurn()
-    // AI.takeUnitsTurns();
-
   };
 
   Board.prototype.endUnitTurn = function(unit) {

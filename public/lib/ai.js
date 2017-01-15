@@ -7,32 +7,30 @@
     this.team = team;
     this.enemyTeam = enemyTeam;
     this.closestEnemiesSearchRadius = 2;
+    this.playing = false;
   };
 
   AI.prototype.play = function() {
-    console.log("");
+    this.playing = true;
     console.log("AI: It's my turn...");
     window.utils.shuffleArray(this.team.units);
-    this.takeUnitsTurns();
-  };
 
-  AI.prototype.takeUnitsTurns = function() {
     this.findUnitToTakeTurn();
   };
 
   AI.prototype.findUnitToTakeTurn = function() {
+    window.battle.deselectAllUnits();
     for (var i = 0; i < this.team.units.length; i++) {
       if (this.team.units[i].isTurnOver() == false) {
         // take turn for this unit
         return this.takeUnitTurn(this.team.units[i]);
       }
     }
-    return window.battle.nextTurn();
   };
 
   AI.prototype.takeUnitTurn = function(unit) {
     console.log("AI: I am taking turn for my " + unit.name);
-    window.board.showOverlaySelectedAt(unit.currentCoor(), "1");
+    unit.select(1);
     this.moveToClosestEnemy(unit);
 
     // var that = this;
@@ -82,10 +80,9 @@
     if (bestChoiceEnemies.length === 0) {
       bestChoiceEnemies = closestEnemies;
     }
-    console.log(bestChoiceEnemies);
 
     var targetEnemy = bestChoiceEnemies[0];
-    console.log("AI: moving towards a " + targetEnemy.unit.nameColor + " that is close and would take the most damage from me.");
+    console.log("    moving towards a " + targetEnemy.unit.nameColor + " that is close and would take the most damage from me.");
     window.board.showOverlaySelectedAt(targetEnemy.unit.currentCoor(), "2");
 
     // choose a spot from target enemy's short path to move to
@@ -99,7 +96,7 @@
     if (!moveToCoor) {
       return unit.endTurn();
     }
-    window.board.showPathFinderShade(movementCoors, targetEnemy.unit);
+    // window.board.showPathFinderShade(movementCoors, targetEnemy.unit);
     window.board.moveUnitTo(unit, moveToCoor[0], moveToCoor[1]);
   };
 

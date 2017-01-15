@@ -17,7 +17,7 @@
     this.team1 = team1;
     this.team2 = team2;
     this.resetTeamTurns(this.team1);
-    console.log("Turn " + this.turn + " , good luck!");
+    this.logTurn();
   };
 
   Battle.prototype.resetTeamTurns = function(team) {
@@ -39,15 +39,19 @@
     } else if (this.teamTurnOver(this.currentTeam())) {
       // if current team all units have made their moves, proceed to next turn
       this.nextTurn();
+    } else if (window.AI.playing) {
+      window.AI.findUnitToTakeTurn();
     }
   };
 
   Battle.prototype.nextTurn = function() {
     this.endTeamTurns(this.currentTeam());
+    this.deselectAllUnits();
     this.turn ++;
-    console.log("Turn " + this.turn);
+    this.logTurn();
     this.resetTeamTurns(this.currentTeam());
     window.board.resetGridBackground(); // reset background
+    window.AI.playing = false;
     if (this.turn % 2 == 0) {
       window.AI.play();
     }
@@ -138,6 +142,13 @@
         window.location.reload();
       }
     }
+  };
+
+  Battle.prototype.logTurn = function () {
+    console.log("");
+    console.log("################# Turn " + this.turn + " #################");
+    console.log("");
+
   };
 
 })();
