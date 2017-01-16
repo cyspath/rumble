@@ -28,7 +28,6 @@
       // if clicked unit is being attacked...
       window.Rumble.SelectedUnit.attack(unit);
       this.contextFunction.resetGridBackground();
-      window.Rumble.SelectedUnit.attacked = true;
       if (window.Rumble.SelectedUnit.isTurnOver()) {
         this.contextFunction.endUnitTurn(window.Rumble.SelectedUnit);
       }
@@ -115,12 +114,15 @@
 
     this.unit.moved = true;
 
+    if (window.AI.playing) {
+      return window.AI.findUnitToTakeTurn();
+    }
+
     if (this.unit.isTurnOver()) {
       this.contextFunction.endUnitTurn(this.unit);
     } else if (!this.unit.attacked) {
       this.contextFunction.showRangeFinder(this.unit);
       this.unit.select(1);
-      // and can still attack
     }
   };
 
@@ -217,7 +219,7 @@
   };
 
   Board.prototype.addForests = function() {
-    var a = [[0,0],[0,1],[0,2],[0,7],[0,8],[1,0],[1,1],[2,0],[1,4],[2,4],[2,3],[9,2],[9,3],[8,3],[8,4],[7,5],[9,5],[8,8],[7,9],[3,7],[4,7],[4,8],[4,9],[5,8],[5,9]]
+    var a = [[0,0],[0,1],[0,2],[0,7],[0,8],[1,0],[1,1],[2,0],[1,4],[2,4],[2,3],[9,2],[9,3],[8,3],[8,4],[7,5],[9,5],[8,8],[7,9],[4,7],[4,8],[4,9],[5,8],[5,9]]
     var that = this;
     a.forEach(function(coor) {
         that.grid[coor[0]][coor[1]].land = [land.grasslandForest1, land.grasslandForest2, land.grasslandForest3, land.grasslandBushes1, land.grasslandBushes2][utils.randomBoundBy(0, 5)];
@@ -269,6 +271,13 @@
       } else {  // show ligher frame
         grid[coor[0]][coor[1]].tile.frame = grid[coor[0]][coor[1]].land.pathFinderShade;
       }
+    }
+  };
+
+  Board.prototype.showShortestPathShade = function (coorArr) {
+    for (var i = 0; i < coorArr.length; i++) {
+      var coor = coorArr[i];
+      grid[coor[0]][coor[1]].tile.tint = 0xCCCCCC;
     }
   };
 

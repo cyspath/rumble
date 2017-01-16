@@ -19,32 +19,54 @@
   };
 
   AI.prototype.findUnitToTakeTurn = function() {
+    if (!this.playing) {
+      return;
+    }
+    
     window.battle.deselectAllUnits();
     for (var i = 0; i < this.team.units.length; i++) {
       if (this.team.units[i].isTurnOver() == false) {
-        // take turn for this unit
         return this.takeUnitTurn(this.team.units[i]);
+      } else {
+        this.team.units[i].endTurn();
       }
     }
+    this.playing = false;
+    console.log('AI: all done, ending my turn.');
+    window.battle.checkNextTurn();
   };
 
   AI.prototype.takeUnitTurn = function(unit) {
+    window.board.resetGridBackground();
     console.log("AI: I am taking turn for my " + unit.name);
     unit.select(1);
-    this.moveToClosestEnemy(unit);
 
-    // var that = this;
-    // setTimeout(function () {
-    //   console.log('taking turn for ' + unit.name);
-    //   unit.endTurn();
-    //   that.takeUnitsTurns();
-    // }, 1000)
+    var enemiesInRange = unit.allEnemiesInRange();
+    if (unit.attacked) {
+      unit.endTurn();
+      return this.findUnitToTakeTurn();
+    } else if (unit.moved && !enemiesInRange) {
+      unit.endTurn();
+      return this.findUnitToTakeTurn();
+    } else if (unit.moved && enemiesInRange) {
+      return this.attackInRangeEnemy(unit);
+    } else if (!unit.moved && !enemiesInRange) {
+      return this.moveToClosestEnemy(unit);
+    } else if (!unit.moved && enemiesInRange) {
+      return this.attackInRangeEnemy(unit);
+    }
   };
 
+  // ################## ATTACKING ######################
+  AI.prototype.attackInRangeEnemy = function(unit) {
+    // find all enemies in range, and pick the best one to attack based on armor type
+    var enemies = window.utils.shuffleArray(unit.enemiesInRange());
+    var targetEnemy = unit.bestTargetFromArr(enemies);
+    unit.attack(targetEnemy);
+  };
+
+  // ################## MOVING ######################
   AI.prototype.moveToClosestEnemy = function(unit) {
-    if (unit.moved) {
-      return unit.endTurn();
-    }
     // array of path objects ranked by A* pathfind distance
     var rankedDistanceObjs = this.enemyTeam.units.map(function (u) {
       return {
@@ -59,7 +81,8 @@
 
     // end unit's turn if it cannot find a target path at all
     if (rankedDistanceObjs.length === 0) {
-      return unit.endTurn();
+      unit.moved = true;
+      return this.findUnitToTakeTurn();
     }
 
     // find closest enemies (within path length deviation of +/- 2)
@@ -94,9 +117,11 @@
     }
 
     if (!moveToCoor) {
-      return unit.endTurn();
+      unit.moved = true;
+      return this.findUnitToTakeTurn();
     }
-    // window.board.showPathFinderShade(movementCoors, targetEnemy.unit);
+    window.board.showPathFinderShade(movementCoors, targetEnemy.unit);
+    window.board.showShortestPathShade(targetEnemy.path);
     window.board.moveUnitTo(unit, moveToCoor[0], moveToCoor[1]);
   };
 

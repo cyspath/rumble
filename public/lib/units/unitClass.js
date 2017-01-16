@@ -25,6 +25,9 @@
     model.animations.add('1', [0,1], 100, true);
     model.animations.add('2', [2,3], 100, true);
     model.inputEnabled = true;
+    // model.input.useHandCursor = true;
+    model.events.onInputOver.add(function() { this.model.tint = 0xFFFFFF}, this);
+    // model.events.onInputOut.add(out, this);
     model.events.onInputDown.add(window.board.handleUnitClick, { context: this, contextFunction: window.board});
     model.frame = (this.x/64 < window.board.grid[0].length/2) ? 2 : 1; // face right if placed on left, vice versa
     return model;
@@ -178,6 +181,7 @@
   UnitClass.prototype.attack = function(unit) {
     var attacker = this;
     var defender = unit;
+    attacker.attacked = true;
     battle.resolveDamage(attacker, defender);
 
     if (defender.hp === 0) {
@@ -187,7 +191,11 @@
       battle.resolveDamage(defender, attacker);
       if (attacker.hp === 0) {
         attacker.destroy(); // attacker dies
+      } else {
+        window.AI.findUnitToTakeTurn();
       }
+    } else {
+      window.AI.findUnitToTakeTurn();
     }
   };
 
@@ -199,6 +207,7 @@
     setTimeout(function() {
       that.model.kill(); // destroy phaser sprite
       window.battle.deleteUnit(that); // remove from team from battle
+      window.AI.findUnitToTakeTurn();
     }, 500)
   };
 
@@ -224,6 +233,17 @@
     } else if (this.damageType == "heavy") {
       return ["heavy"];
     }
+  };
+
+  UnitClass.prototype.bestTargetFromArr = function(enemies) {
+    var bestTarget, damageArmorRatio;
+    for (var i = 0; i < enemies.length; i++) {
+      if (!damageArmorRatio || window.Rumble.DamageVsArmor[this.damageType + '-' + enemies[i].armorType] > damageArmorRatio) {
+        bestTarget = enemies[i];
+        damageArmorRatio = window.Rumble.DamageVsArmor[this.damageType + '-' + enemies[i].armorType];
+      }
+    }
+    return bestTarget;
   };
 
   UnitClass.prototype.canMoveThroughCoor = function (coor) {
