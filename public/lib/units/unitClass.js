@@ -25,9 +25,8 @@
     model.animations.add('1', [0,1], 100, true);
     model.animations.add('2', [2,3], 100, true);
     model.inputEnabled = true;
-    // model.input.useHandCursor = true;
-    model.events.onInputOver.add(function() { this.model.tint = 0xFFFFFF}, this);
-    // model.events.onInputOut.add(out, this);
+    // model.events.onInputOver.add(function() { this.model.tint = 0xFFFFFF }, this);
+    // model.events.onInputOut.add(function() { if (this.isTurnOver()) { this.model.tint = 0xACACAC }}, this);
     model.events.onInputDown.add(window.board.handleUnitClick, { context: this, contextFunction: window.board});
     model.frame = (this.x/64 < window.board.grid[0].length/2) ? 2 : 1; // face right if placed on left, vice versa
     return model;
@@ -57,18 +56,18 @@
   // selection square
   UnitClass.prototype.addSelectionSquare = function () {
     var selectionSquare = this.model.addChild(window.game.add.sprite(0, 0, 'tiles'))
-    selectionSquare.frame = 30;
+    selectionSquare.frame = 40;
     selectionSquare.alpha = 0;
     window.game.add.tween(selectionSquare).to( { alpha: 1 }, 800, Phaser.Easing.Linear.None, true, 0, 1000, true);
     return selectionSquare;
   };
 
   UnitClass.prototype.select = function(n) {
-    this.selectionSquare.frame = String(n) == 1 ? 40 : 41;
+    this.selectionSquare.frame = String(n) == 1 ? 50 : 51;
   };
 
   UnitClass.prototype.deselect = function() {
-    this.selectionSquare.frame = 30;
+    this.selectionSquare.frame = 40;
   };
 
 

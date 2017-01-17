@@ -3,13 +3,13 @@
     window.Rumble = {};
   }
 
-  var land = window.Rumble.Terrain;
+  var Season = window.Rumble.Terrain[0]//[Math.floor(Math.random() * 2)];
 
   var Board = window.Rumble.Board = function () {
     this.grid = this.buildGrid(10, 10);
-    this.addGrassland();
-    this.addForests();
+    this.addLand();
     this.addRocks();
+    this.addForests();
     this.overlay = this.buildOverlay(10, 10);
   };
 
@@ -187,6 +187,17 @@
   };
 
   ////////////////////////// SET UP THE GRID //////////////////////////
+  Board.prototype.atCoor = function(coor) {
+    if (!this.grid[coor[0]] || !this.grid[coor[0]][coor[1]]) {
+      return undefined;
+    } else {
+      return this.grid[coor[0]][coor[1]];
+    }
+  };
+
+  Board.prototype.forestAtCoor = function(coor) {
+    return this.atCoor(coor) && this.atCoor(coor).land.type == 'forest';
+  };
 
   Board.prototype.buildGrid = function(height, width) {
     var m = new Array(height);
@@ -204,16 +215,16 @@
     for (var i = 0; i < height; i++) {
       m[i] = new Array(width);
       for (var j = 0; j < m[i].length; j++) {
-        m[i][j] = { pos: [i, j], tile: undefined, overlayFrame: land.overlayFrame, capture: undefined };
+        m[i][j] = { pos: [i, j], tile: undefined, overlayFrame: Season.overlayFrame, capture: undefined };
       }
     }
     return m;
   };
 
-  Board.prototype.addGrassland = function() {
+  Board.prototype.addLand = function() {
     for (var i = 0; i < this.grid.length; i++) {
       for (var j = 0; j < this.grid[i].length; j++) {
-        this.grid[i][j].land = land.grassland;
+        this.grid[i][j].land = Season.land;
       }
     }
   };
@@ -222,15 +233,53 @@
     var a = [[0,0],[0,1],[0,2],[0,7],[0,8],[1,0],[1,1],[2,0],[1,4],[2,4],[2,3],[9,2],[9,3],[8,3],[8,4],[7,5],[9,5],[8,8],[7,9],[4,7],[4,8],[4,9],[5,8],[5,9]]
     var that = this;
     a.forEach(function(coor) {
-        that.grid[coor[0]][coor[1]].land = [land.grasslandForest1, land.grasslandForest2, land.grasslandForest3, land.grasslandBushes1, land.grasslandBushes2][utils.randomBoundBy(0, 5)];
+      that.grid[coor[0]][coor[1]].land = Season.forest;
     })
   };
+
+  Board.prototype.forestsSpriteFrame = function(coor) {
+    var frame, top = [coor[0] - 1, coor[1]], right = [coor[0], coor[1] + 1], down = [coor[0] + 1, coor[1]], left = [coor[0], coor[1] - 1];
+    if (this.forestAtCoor(top) && this.forestAtCoor(right) && this.forestAtCoor(down) && this.forestAtCoor(left)) {
+      frame = 0;
+    } else if (this.forestAtCoor(right) && this.forestAtCoor(down) && this.forestAtCoor(left)) {
+      frame = 1;
+    } else if (this.forestAtCoor(top) && this.forestAtCoor(down) && this.forestAtCoor(left)) {
+      frame = 2;
+    } else if (this.forestAtCoor(top) && this.forestAtCoor(right) && this.forestAtCoor(left)) {
+      frame = 3;
+    } else if (this.forestAtCoor(top) && this.forestAtCoor(right) && this.forestAtCoor(down)) {
+      frame = 4;
+    } else if (this.forestAtCoor(down) && this.forestAtCoor(left)) {
+      frame = 12;
+    } else if (this.forestAtCoor(right) && this.forestAtCoor(left)) {
+      frame = 13;
+    } else if (this.forestAtCoor(right) && this.forestAtCoor(down)) {
+      frame = 14;
+    } else if (this.forestAtCoor(top) && this.forestAtCoor(left)) {
+      frame = 23;
+    } else if (this.forestAtCoor(top) && this.forestAtCoor(down)) {
+      frame = 24;
+    } else if (this.forestAtCoor(top) && this.forestAtCoor(right)) {
+      frame = 34;
+    } else if (!this.forestAtCoor(top) && !this.forestAtCoor(right) && !this.forestAtCoor(down) && !this.forestAtCoor(left)) {
+      frame = 40;
+    } else if (!this.forestAtCoor(right) && !this.forestAtCoor(down) && !this.forestAtCoor(left)) {
+      frame = 41;
+    } else if (!this.forestAtCoor(top) && !this.forestAtCoor(down) && !this.forestAtCoor(left)) {
+      frame = 42;
+    } else if (!this.forestAtCoor(top) && !this.forestAtCoor(right) && !this.forestAtCoor(left)) {
+      frame = 43;
+    } else if (!this.forestAtCoor(top) && !this.forestAtCoor(right) && !this.forestAtCoor(down)) {
+      frame = 44;
+    }
+    return frame
+  }
 
   Board.prototype.addRocks = function() {
     var a = [[0,5],[0,6],[1,6],[3,2],[3,3],[4,1],[4,2],[5,1],[6,0],[6,4],[7,4],[8,5],[9,4],[9,7],[9,8],[9,9],[8,9]]
     var that = this;
     a.forEach(function(coor) {
-        that.grid[coor[0]][coor[1]].land = land.grasslandRock;
+        that.grid[coor[0]][coor[1]].land = Season.rock;
     })
   };
 
@@ -266,10 +315,11 @@
   Board.prototype.showPathFinderShade = function (coors, unit) {
     for (var coor in coors) {
       coor = coor.split(",")
+      var current = this.atCoor(coor);
       if (unit.moved) { // show darker tint
-        grid[coor[0]][coor[1]].tile.tint = 0xCCCCCC;
+        current.tile.tint = 0xCCCCCC;
       } else {  // show ligher frame
-        grid[coor[0]][coor[1]].tile.frame = grid[coor[0]][coor[1]].land.pathFinderShade;
+        current.tile.frame = current.land.pathFinderShade;
       }
     }
   };
@@ -291,9 +341,16 @@
   Board.prototype.createBackground = function() {
     for (var i = 0; i < this.grid.length; i++) {
       for (var j = 0; j < this.grid[i].length; j++) {
-        tile = window.game.add.sprite(j * 64, i * 64, 'tiles');
 
-        tile.frame = this.grid[i][j].land.default;
+        if (this.grid[i][j].land.type == 'forest') {
+          tile = window.game.add.sprite(j * 64, i * 64, 'forests');
+          var frame = this.forestsSpriteFrame([i,j]);
+          this.grid[i][j].land = { default: frame, pathFinderShade: frame + 5, type: "forest" }
+          tile.frame = frame;
+        } else {
+          tile =  window.game.add.sprite(j * 64, i * 64, 'tiles');
+          tile.frame = this.grid[i][j].land.default;
+        }
 
         tile.inputEnabled = true;
         tile.events.onInputDown.add(this.handleTileClick, { context: tile, contextFunction: this });

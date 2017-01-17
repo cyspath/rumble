@@ -43,16 +43,23 @@
     "ship-sea":     "NO CHANGE"
   };
 
-  Rumble.Terrain = {
-    grassland:         { default: 0, pathFinderShade: 1, type: "normal" },
-    grasslandForest1:  { default: 10, pathFinderShade: 11, type: "forest" },
-    grasslandForest2:  { default: 12, pathFinderShade: 13, type: "forest" },
-    grasslandForest3:  { default: 14, pathFinderShade: 15, type: "forest" },
-    grasslandBushes1:  { default: 2, pathFinderShade: 3, type: "bushes" },
-    grasslandBushes2:  { default: 4, pathFinderShade: 5, type: "bushes" },
-    grasslandRock:     { default: 28, pathFinderShade: 29, type: "rock" },
-    overlayFrame:      { default: 30, sight: 32 }
-  };
+  Rumble.Terrain = [
+    {
+      type: 'summer',
+      land:           { default: 20, pathFinderShade: 21, type: "normal" },
+      forest:         { default: 0, pathFinderShade: 0, type: "forest" },
+      rock:           { default: 28, pathFinderShade: 29, type: "rock" },
+      overlayFrame:   { default: 40, sight: 42 }
+    },
+    {
+      type: 'winter',
+      land:           { default: 0, pathFinderShade: 1, type: "normal" },
+      forest:         { default: 0, pathFinderShade: 0, type: "forest" },
+      rock:           { default: 8, pathFinderShade: 9, type: "rock" },
+      overlayFrame:   { default: 40, sight: 42 }
+    }
+  ]
+
 
 
 

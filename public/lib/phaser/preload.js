@@ -1,26 +1,27 @@
 function preload() {
     game.load.bitmapFont('carrier_command', 'assets/fonts/carrier_command.png', 'assets/fonts/carrier_command.xml');
 
-    game.load.spritesheet('lightSoldierRed', 'images/lightSoldierRed.png', 64, 64);
-    game.load.spritesheet('lightSoldierYellow', 'images/lightSoldierYellow.png', 64, 64);
-    game.load.spritesheet('lightSoldierBlue', 'images/lightSoldierBlue.png', 64, 64);
+    game.load.spritesheet('lightSoldierRed', 'images/units/lightSoldierRed.png', 64, 64);
+    game.load.spritesheet('lightSoldierYellow', 'images/units/lightSoldierYellow.png', 64, 64);
+    game.load.spritesheet('lightSoldierBlue', 'images/units/lightSoldierBlue.png', 64, 64);
 
-    game.load.spritesheet('bazookaSoldierRed', 'images/bazookaSoldierRed.png', 64, 64);
-    game.load.spritesheet('bazookaSoldierYellow', 'images/bazookaSoldierYellow.png', 64, 64);
+    game.load.spritesheet('bazookaSoldierRed', 'images/units/bazookaSoldierRed.png', 64, 64);
+    game.load.spritesheet('bazookaSoldierYellow', 'images/units/bazookaSoldierYellow.png', 64, 64);
 
-    game.load.spritesheet('lightTankYellow', 'images/lightTankYellow.png', 64, 64)
-    game.load.spritesheet('lightTankRed', 'images/lightTankRed.png', 64, 64)
-    game.load.spritesheet('lightTankGreen', 'images/lightTankGreen.png', 64, 64)
+    game.load.spritesheet('lightTankYellow', 'images/units/lightTankYellow.png', 64, 64)
+    game.load.spritesheet('lightTankRed', 'images/units/lightTankRed.png', 64, 64)
+    game.load.spritesheet('lightTankGreen', 'images/units/lightTankGreen.png', 64, 64)
 
-    game.load.spritesheet('heavyTankRed', 'images/heavyTankRed.png', 64, 64)
-    game.load.spritesheet('heavyTankYellow', 'images/heavyTankYellow.png', 64, 64)
-    game.load.spritesheet('heavyTankBlue', 'images/heavyTankBlue.png', 64, 64)
-    game.load.spritesheet('heavyTankGreen', 'images/heavyTankGreen.png', 64, 64)
+    game.load.spritesheet('heavyTankRed', 'images/units/heavyTankRed.png', 64, 64)
+    game.load.spritesheet('heavyTankYellow', 'images/units/heavyTankYellow.png', 64, 64)
+    game.load.spritesheet('heavyTankBlue', 'images/units/heavyTankBlue.png', 64, 64)
+    game.load.spritesheet('heavyTankGreen', 'images/units/heavyTankGreen.png', 64, 64)
 
-    game.load.spritesheet('rocketVehicleRed', 'images/rocketVehicleRed.png', 64, 64);
-    game.load.spritesheet('rocketVehicleYellow', 'images/rocketVehicleYellow.png', 64, 64);
+    game.load.spritesheet('rocketVehicleRed', 'images/units/rocketVehicleRed.png', 64, 64);
+    game.load.spritesheet('rocketVehicleYellow', 'images/units/rocketVehicleYellow.png', 64, 64);
 
-    game.load.spritesheet('tiles', 'images/tiles.png', 64, 64);
+    game.load.spritesheet('tiles', 'images/terrain/tiles.png', 64, 64);
+    game.load.spritesheet('forests', 'images/terrain/forests.png', 64, 64);
 
     game.load.spritesheet('button_end_turn', 'images/button_end_turn.png', 267, 85);
     game.load.spritesheet('button_refresh', 'images/button_refresh.png', 55, 47);
