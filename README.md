@@ -1,5 +1,5 @@
 # RUMBLE
-<img src='https://raw.github.com/cyspath/thunderbird/gh-pages/assets/images/tb-edited.gif' align='center' padding='10px'>
+<img src='https://github.com/joannexin/portfolio/blob/master/img/rumble.png' align='center' padding='10px'>
 
 ## [Play it live here] (http://107.170.239.150/)
 ### Overview
